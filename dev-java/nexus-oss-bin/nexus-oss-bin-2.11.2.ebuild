@@ -10,11 +10,11 @@ DESCRIPTION="Maven Repository Manager"
 HOMEPAGE="http://nexus.sonatype.org/"
 LICENSE="GPL-3"
 MY_PN="nexus-oss-bin"
-MY_PV=$(replace_version_separator 3 '-')"-01"
+MY_PV=$(replace_version_separator 3 '-')"-04"
 echo "Debug: custom package version: ${MY_PV}"
 MY_P="${MY_PN}-${MY_PV}"
 
-SRC_URI="https://github.com/archenroot/nexus-oss/releases/download/nexus-2.11.2-01/nexus-2.11.2-01-bundle.zip"
+SRC_URI="https://sonatype-download.global.ssl.fastly.net/nexus/oss/nexus-2.11.2-04-bundle.tar.gz"
 RESTRICT="mirror"
 KEYWORDS="~x86 ~amd64"
 SLOT="0"
@@ -40,7 +40,7 @@ cd "${S}"
 
 src_install() {
 insinto ${WEBAPP_DIR}
-doins -r nexus-${PV}-01/*
+doins -r nexus-${PV}-04/*
 newinitd "${WORKDIR}/nexus-${MY_PV}/bin/nexus" nexus
 
 fowners -R nexus:nexus ${INSTALL_DIR}
