@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <email>archenroot@gmail.com</email>
+    <name>Woloda Zangetsu</name>
+  </maintainer>
+  <longdescription>
+    VMware Tools is a suite of utilities that enhances the performance of the
+    virtual machine's guest operating system and improves management of the
+    virtual machine. Without VMware Tools installed in your guest operating
+    system, guest performance lacks important functionality. Installing VMware
+    Tools eliminates or improves these issues:
+    - Low video resolution
+    - Inadequate color depth
+    - Incorrect display of network speed
+    - Restricted movement of the mouse
+    - Inability to copy and paste and drag-and-drop files
+    - Missing sound
+    - Provides the ability to take quiesced snapshots of the guest OS
+    - Synchronizes the time in the guest operating system with the time on
+      the host
+    - Provides support for guest-bound calls created with the VMware VIX API
+    
+    VMware Tools includes these components:
+    - VMware Tools service
+    - VMware device drivers
+    - VMware user process
+    - VMware Tools control panel
+    
+    VMware Tools is provided in these formats:
+    
+    ISOs (contain .tar files): These are packaged with the product and are
+    installed in a number of ways, depending upon the VMware product and
+    the guest operating system installed in the virtual machine. For more
+    information, see the Installing VMware Tools section. VMware Tools provides
+    a different ISO file for each type of supported guest operating system:
+    - Windows
+    - Linux
+    - NetWare
+    - Solaris
+    - FreeBSD.
+    
+    Operating System Specific Packages (OSPs): These are downloaded and
+    installed from the command line on an ESXi/ESX host. VMware Tools is
+    available as separate downloadable, light-weight packages that are specific
+    to each supported Linux operating system and VMware product. OSPs are
+    an alternative to the existing mechanism for installing VMware Tools and
+    only support Linux systems running on ESXi/ESX. To download OSPs and
+    to find important information and instructions, go to
+    http://www.vmware.com/download/packages.html.
+    
+    For a list of supported guest operating systems, go to
+    http://www.vmware.com/resources/compatibility/search.php?deviceCategory=software.
+    
+    Binary releases available at:
+    http://softwareupdate.vmware.com/cds/vmw-desktop/player/
+  </longdescription>
+</pkgmetadata>
+

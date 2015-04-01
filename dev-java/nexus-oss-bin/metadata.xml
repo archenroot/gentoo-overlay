@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <email>archenroot@gmail.com</email>
+    <name>Siel aep Archen</name>
+  </maintainer>
+  <longdescription>
+    A repository manager stores and organizes binary software components 
+    for use in development, deployment, and provisioning. Repository managers
+    serve five primary purposess:
+    - Provides a central point for management and governance for all binary
+    software components and their dependencies
+    - Acts as highly configurable proxy between your organization and public
+    repositories
+    - Establishes a deployment destination for internally developed binary
+    components
+    - Enables staging of releases to a temporary repository which can then be
+    used to test and certify a set of artifacts, before they are released
+    - Supports improved security and privacy surrounding what components are 
+    being used across the development organization
+    
+    Repository managers have become essential infrastructure for 
+    component-based software development. To the right is a diagram that 
+    depicts where a repository manager fits into a typical development
+    process.
+    
+    Source code releases available at:
+    https://github.com/sonatype/nexus-oss/releases
+  </longdescription>
+</pkgmetadata>
+
