@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 inherit eutils user systemd
 
 DESCRIPTION="The Apache Cassandra database is the right choice when you need
@@ -55,7 +55,8 @@ src_install() {
     if use systemd; then
         systemd_dounit "${FILESDIR}/cassandra.service"
     else
-        newinitd "${FILESDIR}/init" cassandra
+       # newinitd "${FILESDIR}/init" cassandra
+	newinitd "${WORKDIR}/apache-cassandra-${PV}/bin/cassandra" cassandra
     fi
 
     echo "CONFIG_PROTECT=\"${INSTALL_DIR}/conf\"" > "${T}/25cassandra" || die
