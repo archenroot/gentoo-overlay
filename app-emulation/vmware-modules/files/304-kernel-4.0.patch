@@ -1,0 +1,47 @@
+diff -Naur work.old/vmci-only/linux/vmciKernelIf.c work/vmci-only/linux/vmciKernelIf.c
+--- work.old/vmci-only/linux/vmciKernelIf.c	2015-05-01 22:15:26.484251629 +0200
++++ work/vmci-only/linux/vmciKernelIf.c	2015-05-01 22:15:00.788487277 +0200
+@@ -1176,6 +1176,7 @@
+ {
+    VMCIQueueKernelIf *kernelIf = queue->kernelIf;
+    size_t bytesCopied = 0;
++   struct iov_iter from;
+ 
+    while (bytesCopied < size) {
+       const uint64 pageIndex = (queueOffset + bytesCopied) / PAGE_SIZE;
+@@ -1199,10 +1200,11 @@
+ 
+       if (isIovec) {
+          struct iovec *iov = (struct iovec *)src;
+-         int err;
++         int err = 0;
+ 
++         iov_iter_init(&from, READ, iov, err, size);
+          /* The iovec will track bytesCopied internally. */
+-         err = memcpy_fromiovec((uint8 *)va + pageOffset, iov, toCopy);
++         err = (copy_from_iter((uint8 *)va + pageOffset, toCopy, &from) != toCopy);
+          if (err != 0) {
+             if (kernelIf->host) {
+                kunmap(kernelIf->u.h.page[pageIndex]);
+diff -Naur work.old/vsock-only/linux/af_vsock.c work/vsock-only/linux/af_vsock.c
+--- work.old/vsock-only/linux/af_vsock.c	2015-05-01 22:15:26.486251768 +0200
++++ work/vsock-only/linux/af_vsock.c	2015-05-01 22:15:00.792486758 +0200
+@@ -4220,6 +4220,7 @@
+    VSockVmciSock *vsk;
+    struct sockaddr_vm *remoteAddr;
+    VMCIDatagram *dg;
++   struct iov_iter from;
+ 
+    if (msg->msg_flags & MSG_OOB) {
+       return -EOPNOTSUPP;
+@@ -4302,7 +4303,9 @@
+       goto out;
+    }
+ 
+-   memcpy_fromiovec(VMCI_DG_PAYLOAD(dg), msg->msg_iov, len);
++   iov_iter_init(&from, READ, msg->msg_iov, err, len);
++
++   copy_from_iter(VMCI_DG_PAYLOAD(dg), len, &from);
+ 
+    dg->dst = VMCI_MAKE_HANDLE(remoteAddr->svm_cid, remoteAddr->svm_port);
+    dg->src = VMCI_MAKE_HANDLE(vsk->localAddr.svm_cid, vsk->localAddr.svm_port);

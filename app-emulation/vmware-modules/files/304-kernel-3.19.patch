@@ -1,0 +1,236 @@
+diff -u vmnet-only/driver.c vmnet-only.new/driver.c
+--- vmnet-only/driver.c	2014-11-20 20:13:56.000000000 -0500
++++ vmnet-only.new/driver.c	2015-02-09 11:53:18.000000000 -0500
+@@ -264,11 +264,17 @@
+ 			    struct file * filp)  // IN:
+ {
+    int ret = -ENOTTY;
+-
+-   if (filp && filp->f_op && filp->f_op->ioctl == VNetFileOpIoctl) {
+-      ret = VNetFileOpIoctl(filp->f_dentry->d_inode, filp, iocmd, ioarg);
+-   }
+-   return ret;
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0)
++ if (filp && filp->f_op && filp->f_op->ioctl == VNetFileOpIoctl) {
++ ret = VNetFileOpIoctl(filp->f_dentry->d_inode, filp, iocmd, ioarg);
++ }
++ return ret;
++#else 
++ if (filp && filp->f_op && filp->f_op->ioctl == VNetFileOpIoctl) {
++ ret = VNetFileOpIoctl(filp->f_path.dentry->d_inode, filp, iocmd, ioarg);
++ }
++ return ret;
++#endif
+ }
+ 
+ 
+@@ -1191,11 +1197,20 @@
+    struct inode *inode = NULL;
+    long err;
+ 
+-   if (filp && filp->f_dentry) {
+-      inode = filp->f_dentry->d_inode;
+-   }
+-   err = VNetFileOpIoctl(inode, filp, iocmd, ioarg);
+-   return err;
++   #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0)
++ if (filp && filp->f_dentry) {
++ inode = filp->f_dentry->d_inode;
++ }
++ err = VNetFileOpIoctl(inode, filp, iocmd, ioarg);
++ return err;
++#else 
++ if (filp && filp->f_path.dentry) {
++ inode = filp->f_path.dentry->d_inode;
++ }
++ err = VNetFileOpIoctl(inode, filp, iocmd, ioarg);
++ return err;
++#endif
++
+ }
+ #endif
+ 
+diff -u vmnet-only/userif.c vmnet-only.new/userif.c
+--- vmnet-only/userif.c	2014-11-20 20:13:56.000000000 -0500
++++ vmnet-only.new/userif.c	2015-02-09 11:56:03.000000000 -0500
+@@ -523,7 +523,13 @@
+       .iov_base = buf,
+       .iov_len  = len,
+    };
+-   return skb_copy_datagram_iovec(skb, 0, &iov, len);
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0)
++ return skb_copy_datagram_iovec(skb, 0, &iov, len);
++#else
++ struct iov_iter to;
++ iov_iter_init(&to, READ, &iov, 1, len);
++ return skb_copy_datagram_iter(skb, 0, &to, len);
++#endif
+ }
+ 
+ 
+diff -u vmblock-only.orig/linux/file.c vmblock-only/linux/file.c
+--- vmblock-only.orig/linux/file.c	2015-02-11 12:18:29.000000000 -0500
++++ vmblock-only/linux/file.c	2015-02-11 12:41:41.000000000 -0500
+@@ -92,7 +92,7 @@
+     * and that would try to acquire the inode's semaphore; if the two inodes
+     * are the same we'll deadlock.
+     */
+-   if (actualFile->f_dentry && inode == actualFile->f_dentry->d_inode) {
++   if (actualFile->f_path.dentry && inode == actualFile->f_path.dentry->d_inode) {
+       Warning("FileOpOpen: identical inode encountered, open cannot succeed.\n");
+       if (filp_close(actualFile, current->files) < 0) {
+          Warning("FileOpOpen: unable to close opened file.\n");
+diff -rupN vmblock-only.orig/linux/dentry.c vmblock-only/linux/dentry.c
+--- vmblock-only.orig/linux/dentry.c	2015-02-14 18:05:46.000000000 -0500
++++ vmblock-only/linux/dentry.c	2015-02-14 18:09:59.000000000 -0500
+@@ -63,7 +63,7 @@ DentryOpRevalidate(struct dentry *dentry
+                    unsigned int flags)   // IN: lookup flags & intent
+ {
+    VMBlockInodeInfo *iinfo;
+-   struct nameidata actualNd;
++   struct path actualNd;
+    struct dentry *actualDentry;
+    int ret;
+ 
+diff -rupN vmblock-only.orig/linux/filesystem.c vmblock-only/linux/filesystem.c
+--- vmblock-only.orig/linux/filesystem.c	2014-11-20 19:29:15.000000000 -0500
++++ vmblock-only/linux/filesystem.c	2015-02-14 18:10:49.000000000 -0500
+@@ -322,7 +322,7 @@ Iget(struct super_block *sb,    // IN: f
+ {
+    VMBlockInodeInfo *iinfo;
+    struct inode *inode;
+-   struct nameidata actualNd;
++   struct path actualNd;
+ 
+    ASSERT(sb);
+ 
+diff -rupN vmblock-only.orig/shared/compat_namei.h vmblock-only/shared/compat_namei.h
+--- vmblock-only.orig/shared/compat_namei.h	2014-11-20 19:29:15.000000000 -0500
++++ vmblock-only/shared/compat_namei.h	2015-02-14 18:08:38.000000000 -0500
+@@ -26,21 +26,21 @@
+  * struct. They were both replaced with a struct path.
+  */
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25)
+-#define compat_vmw_nd_to_dentry(nd) (nd).path.dentry
++#define compat_vmw_nd_to_dentry(nd) (nd).dentry
+ #else
+ #define compat_vmw_nd_to_dentry(nd) (nd).dentry
+ #endif
+ 
+ /* In 2.6.25-rc2, path_release(&nd) was replaced with path_put(&nd.path). */
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25)
+-#define compat_path_release(nd) path_put(&(nd)->path)
++#define compat_path_release(nd) path_put(nd)
+ #else
+ #define compat_path_release(nd) path_release(nd)
+ #endif
+ 
+ /* path_lookup was removed in 2.6.39 merge window VFS merge */
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 38)
+-#define compat_path_lookup(name, flags, nd)     kern_path(name, flags, &((nd)->path))
++#define compat_path_lookup(name, flags, nd)     kern_path(name, flags, nd)
+ #else
+ #define compat_path_lookup(name, flags, nd)     path_lookup(name, flags, nd)
+ #endif
+diff -ur vmci-only.orig/linux/vmciKernelIf.c vmci-only/linux/vmciKernelIf.c
+--- vmci-only.orig/linux/vmciKernelIf.c	2014-06-13 01:20:45.000000000 +0200
++++ vmci-only/linux/vmciKernelIf.c	2015-02-21 17:59:47.011588979 +0100
+@@ -1249,6 +1249,23 @@
+    return VMCI_SUCCESS;
+ }
+ 
++int memcpy_toiovec(struct iovec *iov, unsigned char *kdata, int len)
++{
++	while (len > 0) {
++		if (iov->iov_len) {
++			int copy = min_t(unsigned int, iov->iov_len, len);
++			if (copy_to_user(iov->iov_base, kdata, copy))
++				return -EFAULT;
++			kdata += copy;
++			len -= copy;
++			iov->iov_len -= copy;
++			iov->iov_base += copy;
++		}
++		iov++;
++	}
++
++	return 0;
++}
+ 
+ /*
+  *-----------------------------------------------------------------------------
+diff -ur vsock-only.orig/linux/af_vsock.c vsock-only/linux/af_vsock.c
+--- vsock-only.orig/linux/af_vsock.c	2015-02-21 18:09:14.147266976 +0100
++++ vsock-only/linux/af_vsock.c	2015-02-21 18:14:07.134285068 +0100
+@@ -233,13 +233,13 @@
+                                      char __user *optval, int __user * optlen);
+ 
+ static int VSockVmciDgramSendmsg(struct kiocb *kiocb,
+-                                 struct socket *sock, struct msghdr *msg, size_t len);
++                                 struct socket *sock, struct user_msghdr *msg, size_t len);
+ static int VSockVmciDgramRecvmsg(struct kiocb *kiocb, struct socket *sock,
+-                                 struct msghdr *msg, size_t len, int flags);
++                                 struct user_msghdr *msg, size_t len, int flags);
+ static int VSockVmciStreamSendmsg(struct kiocb *kiocb,
+-                                 struct socket *sock, struct msghdr *msg, size_t len);
++                                 struct socket *sock, struct user_msghdr *msg, size_t len);
+ static int VSockVmciStreamRecvmsg(struct kiocb *kiocb, struct socket *sock,
+-                                 struct msghdr *msg, size_t len, int flags);
++                                 struct user_msghdr *msg, size_t len, int flags);
+ 
+ static int VSockVmciCreate(
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 24)
+@@ -4195,7 +4195,7 @@
+ static int
+ VSockVmciDgramSendmsg(struct kiocb *kiocb,          // UNUSED
+                       struct socket *sock,          // IN: socket to send on
+-                      struct msghdr *msg,           // IN: message to send
++                      struct user_msghdr *msg,           // IN: message to send
+                       size_t len)                   // IN: length of message
+ {
+    int err;
+@@ -4525,7 +4525,7 @@
+ static int
+ VSockVmciStreamSendmsg(struct kiocb *kiocb,          // UNUSED
+                        struct socket *sock,          // IN: socket to send on
+-                       struct msghdr *msg,           // IN: message to send
++                       struct user_msghdr *msg,           // IN: message to send
+                        size_t len)                   // IN: length of message
+ {
+    struct sock *sk;
+@@ -4694,7 +4694,7 @@
+ static int
+ VSockVmciDgramRecvmsg(struct kiocb *kiocb,          // UNUSED
+                       struct socket *sock,          // IN: socket to receive from
+-                      struct msghdr *msg,           // IN/OUT: message to receive into
++                      struct user_msghdr *msg,           // IN/OUT: message to receive into
+                       size_t len,                   // IN: length of receive buffer
+                       int flags)                    // IN: receive flags
+ {
+@@ -4704,6 +4704,7 @@
+    VMCIDatagram *dg;
+    size_t payloadLen;
+    struct sk_buff *skb;
++   struct iov_iter to;
+ 
+    sk = sock->sk;
+    noblock = flags & MSG_DONTWAIT;
+@@ -4742,7 +4743,8 @@
+    }
+ 
+    /* Place the datagram payload in the user's iovec. */
+-   err = skb_copy_datagram_iovec(skb, sizeof *dg, msg->msg_iov, payloadLen);
++   iov_iter_init(&to, READ, msg->msg_iov, 1, payloadLen);
++   err = skb_copy_datagram_iter(skb, sizeof *dg, &to, payloadLen);
+    if (err) {
+       goto out;
+    }
+@@ -4785,7 +4787,7 @@
+ static int
+ VSockVmciStreamRecvmsg(struct kiocb *kiocb,          // UNUSED
+                        struct socket *sock,          // IN: socket to receive from
+-                       struct msghdr *msg,           // IN/OUT: message to receive into
++                       struct user_msghdr *msg,           // IN/OUT: message to receive into
+                        size_t len,                   // IN: length of receive buffer
+                        int flags)                    // IN: receive flags
+ {
