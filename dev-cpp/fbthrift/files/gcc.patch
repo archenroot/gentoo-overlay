@@ -1,0 +1,30 @@
+--- lib/cpp/util/kerberos/Krb5CredentialsCacheManager.cpp.old   2016-05-18 11:57:59.985732417 +0200 
++++ lib/cpp/util/kerberos/Krb5CredentialsCacheManager.cpp   2016-05-18 11:58:23.737731317 +0200 
+@@ -16,6 +16,7 @@ 
+  
+ #include <thrift/lib/cpp/util/kerberos/Krb5CredentialsCacheManager.h> 
+  
++#include <gflags/gflags.h> 
+ #include <glog/logging.h> 
+ #include <memory> 
+ #include <set> 
+--- lib/cpp2/protocol/BinaryProtocol.h.old   2016-05-18 12:22:58.139663013 +0200 
++++ lib/cpp2/protocol/BinaryProtocol.h   2016-05-18 11:51:49.632749575 +0200 
+@@ -17,6 +17,7 @@ 
+ #ifndef CPP2_PROTOCOL_TBINARYPROTOCOL_H_ 
+ #define CPP2_PROTOCOL_TBINARYPROTOCOL_H_ 1 
+  
++#include <gflags/gflags.h> 
+ #include <folly/io/IOBuf.h> 
+ #include <folly/io/IOBufQueue.h> 
+ #include <folly/io/Cursor.h> 
+--- lib/cpp2/protocol/CompactProtocol.h.old   2016-05-18 12:23:13.947662281 +0200 
++++ lib/cpp2/protocol/CompactProtocol.h   2016-05-18 11:49:48.104755205 +0200 
+@@ -17,6 +17,7 @@ 
+ #ifndef CPP2_PROTOCOL_COMPACTPROTOCOL_H_ 
+ #define CPP2_PROTOCOL_COMPACTPROTOCOL_H_ 1 
+  
++#include <gflags/gflags.h> 
+ #include <folly/FBVector.h> 
+ #include <folly/io/IOBuf.h> 
+ #include <folly/io/Cursor.h> 
