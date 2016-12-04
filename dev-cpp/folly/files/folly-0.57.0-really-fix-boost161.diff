@@ -1,0 +1,12 @@
+--- folly/futures/Future-inl.h	2016-07-21 14:36:33.856695100 -0400
++++ folly/futures/Future-inl.h	2016-07-21 14:38:03.946413746 -0400
+@@ -28,7 +28,8 @@
+ #include <folly/futures/detail/Core.h>
+ #include <folly/futures/Timekeeper.h>
++#include <folly/config.h>
+ 
+-#if FOLLY_MOBILE || defined(__APPLE__)
++#if FOLLY_MOBILE || defined(__APPLE__) || !defined(HAVE_BOOST_CONTEXT)
+ #define FOLLY_FUTURE_USING_FIBER 0
+ #else
+ #define FOLLY_FUTURE_USING_FIBER 1
