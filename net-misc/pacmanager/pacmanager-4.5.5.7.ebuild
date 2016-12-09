@@ -34,7 +34,9 @@ RDEPEND="freerdp? ( net-misc/freerdp )
 	dev-perl/gtk2-gladexml
 	dev-perl/Gnome2-Vte
 	dev-perl/Expect
-	dev-perl/IO-Stty"
+	dev-perl/IO-Stty
+	dev-perl/YAML
+	dev-perl/Gtk2-AppIndicator"
 
 S="${WORKDIR}/pac"
 
