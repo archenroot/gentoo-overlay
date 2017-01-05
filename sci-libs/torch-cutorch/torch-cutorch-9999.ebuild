@@ -33,6 +33,7 @@ src_configure() {
 		"-DLUA_LIBDIR=/usr/lib"
 		"-DLUALIB=/usr/lib/libluajit-5.1.so"
 		"-DLUA=/usr/bin/luajit"
+		"-DCUDA_TOOLKIT_ROOT_DIR=/opt/cuda"
 	)
 
 	cmake-utils_src_configure
