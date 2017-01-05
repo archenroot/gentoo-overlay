@@ -10,7 +10,7 @@ DESCRIPTION="Torch module for neural networks."
 HOMEPAGE="https://github.com/VisionLabs/torch-opencv"
 EGIT_REPO_URI="https://github.com/VisionLabs/torch-opencv.git"
 
-LICENSE="BSD3"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
