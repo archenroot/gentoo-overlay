@@ -12,16 +12,17 @@ EGIT_REPO_URI="https://github.com/torch/class.git"
 
 LICENSE="BSD3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE=""
 
 COMMON_DEPEND=">=dev-lang/lua-5.1:="
-DEPEND="dev-lang/luajit:2
+DEPEND="${COMMON_DEPEND}
+	dev-lang/luajit:2
 	virtual/pkgconfig"
-RDEPEND="${DEPEND}"
+RDEPEND="${COMMON_DEPEND} ${DEPEND}"
 
 src_install() {
-	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD lua)"/class
-	doins init.lua
+	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD lua)/class"
+	doins -r init.lua
 	dodoc README.md
 }
