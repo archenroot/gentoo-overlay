@@ -9,7 +9,7 @@ DESCRIPTION=""
 HOMEPAGE="https://github.com/facebook/fbthrift" 
 inherit git-r3 
 EGIT_REPO_URI="https://github.com/facebook/fbthrift.git" 
-#EGIT_COMMIT="e790a9675915df21148be308bd56eade52ca4084" 
+EGIT_COMMIT="55c06662959eb55ed444c0c6eaefd2581db9cfa5"
 KEYWORDS="~amd64" 
 
 LICENSE="Apache-2.0" 
