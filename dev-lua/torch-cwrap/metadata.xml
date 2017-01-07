@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <upstream>
+    <bugs-to>https://github.com/torch/cwrap/issues</bugs-to>
+    <changelog>ttps://github.com/torch/cwrap/blob/master/CHANGELOG.md</changelog>
+    <doc>https://github.com/torch/class/cwrap/master/README.md</doc>
+  </upstream>
+  <maintainer type="project">
+    <email>archenroot@gmail.com</email>
+    <name>Ladislav Jech</name>
+  </maintainer>
+  <longdescription>
+    The cwrap package helps you to automate the generation of Lua/C 
+    wrappers around existing C functions, such that these functions 
+    would be callable from Lua. This package is used by the torch 
+    package, but does not depend on anything, and could be used by 
+    anyone using Lua.
+  </longdescription>
+</pkgmetadata>
