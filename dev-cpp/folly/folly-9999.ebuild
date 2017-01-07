@@ -36,4 +36,4 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P}/${PN}"
 
-PATCHES=( "${FILESDIR}/${PN}-0.57.0-really-fix-boost161.diff" )
+#PATCHES=( "${FILESDIR}/${PN}-0.57.0-really-fix-boost161.diff" )
