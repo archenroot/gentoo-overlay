@@ -24,5 +24,7 @@ RDEPEND="${COMMON_DEPEND} ${DEPEND}"
 src_install() {
 	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))/class"
 	doins -r init.lua
-	dodoc README.md
+	if use doc; then
+		dodoc README.md
+	fi
 }
