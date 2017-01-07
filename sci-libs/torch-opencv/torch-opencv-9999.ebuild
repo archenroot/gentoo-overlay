@@ -38,7 +38,6 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1
-	mv "${D}"/usr/lib/* "${D}"/usr/lib/lua/5.1/ || die 
-	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/ || die 
+	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/ || die
 	rm -rf "${D}"/usr/lua
 }
