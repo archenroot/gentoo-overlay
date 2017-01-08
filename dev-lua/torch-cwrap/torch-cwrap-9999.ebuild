@@ -22,9 +22,8 @@ DEPEND="${COMMON_DEPEND}
 RDEPEND="${COMMON_DEPEND} 
 		 ${DEPEND}"
 src_configure() {
-	LUADIR="$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
 	local mycmakeargs=(
-                "-DLUADIR=${LUADIR}"
+                "-DLUADIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
     )
 	cmake-utils_src_configure
 }
