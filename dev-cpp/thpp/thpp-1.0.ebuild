@@ -1,22 +1,30 @@
-DESCRIPTION="Facebook TH++: A C++ tensor library"
-SLOT="0"
+ # cat dev-cpp/fbthrift/fbthrift-0.31.0.ebuild 
+EAPI=5 
 
-EAPI=6
+AUTOTOOLS_IN_SOURCE_BUILD=1 
+AUTOTOOLS_AUTORECONF=1 
+inherit autotools-utils 
 
-HOMEPAGE="http://wiki.gentoo.org/index.php?title=Basic_guide_to_write_Gentoo_Ebuilds"
-
-KEYWORDS="~amd64"
-
+DESCRIPTION="" 
+HOMEPAGE="https://github.com/facebook/fbthrift" 
+inherit git-r3 
 EGIT_REPO_URI="https://github.com/facebook/thpp.git"
 EGIT_COMMIT="a33971a22d348f15a85c955ad75e75916804112e"
+KEYWORDS="~amd64" 
 
-LICENSE="BSD License"
+LICENSE="Apache-2.0" 
+SLOT="0" 
+IUSE="static-libs" 
 
-DEPEND="sci-libs/torch7"
-RDEPEND=${DEPEND}
+DEPEND="dev-cpp/folly 
+      sys-process/numactl 
+      dev-cpp/wangle" 
+RDEPEND="${DEPEND}" 
 
-S="${WORKDIR}/${P}/thpp"
+S="${WORKDIR}/${P}/thpp" 
 
-src_configure(){
-
-}
+src_configure() { 
+   autotools-utils_src_prepare 
+    PYTHON=2 PYTHON_VERSION=2 econf 
+   #epatch "${FILESDIR}/gcc.patch" 
+} 
