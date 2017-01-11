@@ -1,0 +1,11 @@
+--- ATLAS/CONFIG/src/config.c.orig	2017-01-11 11:46:52.513095621 +0100
++++ ATLAS/CONFIG/src/config.c	2017-01-11 11:48:40.021098026 +0100
+@@ -1025,7 +1025,7 @@
+    *verb = 0;
+    *NoCygwin = 0;
+    *NoF77 = 0;
+-   *ThrChk = 1;
++   *ThrChk = 0;
+    *nthreads = -1;
+    *tids = NULL;
+    *omp = *AntThr = 0;
