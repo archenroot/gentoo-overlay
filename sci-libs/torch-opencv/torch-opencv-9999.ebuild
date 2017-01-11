@@ -17,6 +17,8 @@ IUSE="+cuda -tests"
 
 DEPEND=">=dev-lang/lua-5.1:=
 		dev-lang/luajit:2
+		virtual/blas
+		virtual/lapack
 		=sci-libs/torch7-9999
 		cuda? ( sci-libs/torch-cutorch )"
 RDEPEND="${DEPEND}"
@@ -41,7 +43,7 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
-        mv "${D}"/usr/lib/libcutorch.so "${D}"/usr/lib/lua/5.1/
+        mv "${D}"/usr/lib/lib*.so "${D}"/usr/lib/lua/5.1/
         mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
         rm -rf "${D}"/usr/lua
 }
