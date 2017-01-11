@@ -33,6 +33,15 @@ src_configure() {
 		"-DLUA=/usr/bin/luajit"
 	)
 	cmake-utils_src_configure
+
+}
+
+src_install() {
+	cmake-utils_src_install
+	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
+        mv "${D}"/usr/lib64/libpaths.so "${D}"/usr/lib/lua/5.1/
+        mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
+        rm -rf "${D}"/usr/lua
 }
 
 
