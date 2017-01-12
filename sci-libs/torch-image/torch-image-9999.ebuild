@@ -13,22 +13,24 @@ EGIT_REPO_URI="https://github.com/torch/image.git"
 LICENSE="BSD3"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="luajit"
 
 DEPEND=">=dev-lang/lua-5.1:=
-dev-lang/luajit:2
-=sci-libs/torch7-9999"
+		dev-lang/luajit:2
+		=sci-libs/torch7-9999
+		media-libs/libpng
+		media-libs/libjpeg-turbo"
 RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
-		"-DLUADIR=/usr/lib/lua/5.1"
-		"-DLUADIR=/usr/share/lua/5.1"
-		"-DLIBDIR=/usr/lib/lua/5.1"
-		"-DLUA_BINDIR=/usr/bin"
-		"-DLUA_INCDIR=/usr/include/luajit-2.0"
-		"-DLUA_LIBDIR=/usr/lib"
-		"-DLUALIB=/usr/lib/libluajit-5.1.so"
+		"-DLUADIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
+		"-DLIBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LIB $(usex luajit 'luajit' 'lua'))"
+		"-DLUA_BINDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
+		"-DLUA_INCDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_INC $(usex luajit 'luajit' 'lua'))"
+		"-DLUA_LIBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_CMOD $(usex luajit 'luajit' 'lua'))"
+		"-DSCRIPTS_DIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
+		"-DLUALIB=`equery files luajit |grep lib64/libluajit | grep .so | awk 'NR==0; END{print}'`"
 		"-DLUA=/usr/bin/luajit"
 	)
 
