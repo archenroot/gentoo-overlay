@@ -1,5 +1,5 @@
  # cat dev-cpp/fbthrift/fbthrift-0.31.0.ebuild 
-EAPI=5 
+EAPI=5
 
 AUTOTOOLS_IN_SOURCE_BUILD=1 
 AUTOTOOLS_AUTORECONF=1 

@@ -16,8 +16,8 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND=">=dev-lang/lua-5.1:=
-dev-lang/luajit:2
-=sci-libs/torch7-9999"
+		dev-lang/luajit:2
+		=sci-libs/torch7-9999"
 RDEPEND="${DEPEND}"
 
 src_configure() {

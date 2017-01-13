@@ -13,6 +13,7 @@ HOMEPAGE="https://github.com/facebook/folly"
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/facebook/folly.git"
+	EGIT_REPO_COMMIT="e1a15f9600e77c094dc368cb5dbe1c2ecd3dcb4f"
 else
 	SRC_URI="https://github.com/facebook/folly/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"

@@ -3,7 +3,7 @@ EAPI=5
 
 AUTOTOOLS_IN_SOURCE_BUILD=1 
 AUTOTOOLS_AUTORECONF=1 
-inherit autotools-utils 
+inherit git-r3 autotools-utils 
 
 DESCRIPTION="" 
 HOMEPAGE="https://github.com/facebook/fbthrift" 
@@ -16,15 +16,28 @@ LICENSE="Apache-2.0"
 SLOT="0" 
 IUSE="static-libs" 
 
-DEPEND="dev-cpp/folly 
+DEPEND=">=dev-util/cmake-3.7.1
+	dev-cpp/folly 
       sys-process/numactl 
-      dev-cpp/wangle" 
+      dev-cpp/wangle
+	sys-devel/flex
+	sys-devel/bison
+	app-crypt/mit-krb5
+dev-libs/cyrus-sasl
+sys-process/numactl
+virtual/pkgconfig
+dev-libs/openssl
+dev-libs/libevent
+dev-libs/boost
+dev-cpp/glog
+dev-libs/double-conversion
+dev-util/scons
+app-arch/snappy" 
 RDEPEND="${DEPEND}" 
 
 S="${WORKDIR}/${P}/thrift" 
 
 src_configure() { 
-   autotools-utils_src_prepare 
-    PYTHON=2 PYTHON_VERSION=2 econf 
-   #epatch "${FILESDIR}/gcc.patch" 
-} 
+	autotools-utils_src_prepare 
+}
+

@@ -1,0 +1,52 @@
+# Copyright 1999-2016 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+EAPI=6
+
+inherit git-r3
+
+DESCRIPTION="TREPL is a command-line REPL for Torch."
+HOMEPAGE="https://github.com/archenroot/trepl"
+EGIT_REPO_URI="https://github.com/archenroot/trepl.git"
+
+LICENSE="BSD3"
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE="doc luajit"
+
+COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
+		luajit? ( dev-lang/luajit:2= )"
+DEPEND="${COMMON_DEPEND}
+		>=dev-lang/lua-5.1:=
+		dev-lang/luajit:2
+		sys-libs/readline
+		=sci-libs/torch7-9999"
+RDEPEND="${DEPEND}"
+
+BUILD_DIR="${WORKDIR}/${P}/build"
+VERBOSE=1
+CMAKE_VERBOSE=1
+src_compile() {
+    elog "PHASE COMPILE"
+    elog `pwd`
+	cd ${WORKDIR}/${P}
+	elog `pwd`
+	gcc -shared -fPIC ${CFLAGS} -I/usr/include/luajit-2.0 -o readline.so readline.c -lluajit-5.1 -lreadline
+	gcc -shared -fPIC ${CFLAGS} -I/usr/include/luajit-2.0 -o treplutils.so utils.c -lluajit-5.1
+}
+
+src_install() {
+	elog "PHASE INSTALL"
+	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))/trepl"
+	doins -r init.lua
+	doins -r colors.lua
+	doins -r colorize.lua
+
+	if use doc; then
+		dodoc README.md
+		dodoc doc/index.md
+	fi
+	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
+	dobin th
+}

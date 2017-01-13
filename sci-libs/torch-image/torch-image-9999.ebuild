@@ -32,6 +32,9 @@ src_configure() {
 		"-DSCRIPTS_DIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		"-DLUALIB=`equery files luajit |grep lib64/libluajit | grep .so | awk 'NR==0; END{print}'`"
 		"-DLUA=/usr/bin/luajit"
+		"-DCMAKE_BUILD_TYPE=Release"
+		"-DCMAKE_PREFIX_PATH=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))/.."
+		"-DCMAKE_INSTALL_PREFIX=/usr"
 	)
 
 	cmake-utils_src_configure

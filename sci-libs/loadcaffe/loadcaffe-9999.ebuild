@@ -35,6 +35,7 @@ echo "INSTALL_BIN $($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'lu
 	echo "INSTALL_TOP $($(tc-getPKG_CONFIG) --variable INSTALL_TOP $(usex luajit 'luajit' 'lua'))"
 	echo "`equery files luajit |grep lib64/libluajit | grep .so | awk 'NR==0; END{print}'`"
 	local mycmakeargs=(
+		"-DCMAKE_BUILD_TYPE=Release"
 		"-DLUADIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
 		"-DLIBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LIB $(usex luajit 'luajit' 'lua'))"
 		"-DLUA_BINDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
@@ -43,6 +44,8 @@ echo "INSTALL_BIN $($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'lu
 		"-DSCRIPTS_DIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		"-DLUALIB=`equery files luajit |grep lib64/libluajit | grep .so | awk 'NR==0; END{print}'`"
 		"-DLUA=/usr/bin/luajit"
+		"-DCMAKE_PREFIX_PATH=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))/.."
+		"-DCMAKE_INSTALL_PREFIX=/usr"
 	)
 	cmake-utils_src_configure
 

@@ -19,11 +19,15 @@ FEATURES="keeptemp keepwork"
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
 				luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
-		virtual/pkgconfig"
+		virtual/pkgconfig
+		>=dev-qt/qtcore-4.8.6-r2
+		>=dev-qt/designer-4.8.6-r1
+		>=dev-qt/qtsvg-4.8.6-r1"
 RDEPEND="${COMMON_DEPEND} ${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
+		"-DCMAKE_BUILD_TYPE=Release"
 		"-DLUADIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
 		"-DLIBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LIB $(usex luajit 'luajit' 'lua'))"
 		"-DLUA_BINDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
@@ -37,6 +41,7 @@ src_configure() {
 		"-DQtLua_INSTALL_BIN_SUBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		"-DQtLua_INSTALL_LIB=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		"-DQtLua_INSTALL_LIB_SUBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_CMOD $(usex luajit 'luajit' 'lua'))"
+		"-DCONFDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))/etc"
 	)
 	cmake-utils_src_configure
 }
