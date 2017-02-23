@@ -31,7 +31,8 @@ src_prepare() {
 	# Fixing compatibility with Facebook folly library where they enforced 
 	# append-cflags -std=gnu++14
 	# append-cflags -std=c++14
-
+	elog "lua:" $($(tc-getPKG_CONFIG) --variable INSTALL_LMOD lua)
+	elog "luajit:" $($(tc-getPKG_CONFIG) --variable INSTALL_LMOD luajit)
 	cmake-utils_src_prepare
 }
 src_configure() { 

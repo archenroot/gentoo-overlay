@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 IUSE="+minimal cuda cudnn luajit opencl"
 
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
-				luajit? ( dev-lang/luajit:2= )"
+		luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 	virtual/blas
 	virtual/lapack
