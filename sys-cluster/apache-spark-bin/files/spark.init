@@ -1,0 +1,32 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+DAEMON=${SVCNAME/spark-}
+SPARK_PID_DIR=/var/run/pids
+
+depend() {
+         use dns net ssh
+}
+
+
+start() {
+    [ -d $SPARK_PID_DIR ] || mkdir -m 777 $SPARK_PID_DIR
+    if [ "$DAEMON" == "worker" ]
+    then sparkmaster=`egrep  "^[0-9].*#.* sparkmaster" /etc/hosts | awk '{ print $3}' `
+	 CMD="$SPARK_HOME/sbin/start-slave.sh -- spark://$sparkmaster:7077"
+    else CMD="$SPARK_HOME/sbin/start-master.sh"
+    fi
+    
+    ebegin "Starting Apache Spark $DAEMON"
+    start-stop-daemon --start --quiet --pidfile $SPARK_PID_DIR/spark-spark-org.apache.spark.deploy.${DAEMON}.${DAEMON^}-1.pid \
+		      -u spark -x ${CMD}
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping Apache Spark $DAEMON"
+    start-stop-daemon --stop --quiet --pidfile $SPARK_PID_DIR/spark-spark-org.apache.spark.deploy.${DAEMON}.${DAEMON^}-1.pid
+    eend $?
+}
