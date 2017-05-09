@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+EAPI="5"
+
 inherit java-vm-2 versionator eutils
 
 JDK_RELEASE=$(get_version_component_range 2-3)
@@ -47,41 +49,8 @@ PPC64_JDK_DIST="${JDK_DIST_PREFIX}-ppc64.tgz"
 PPC64_JAVACOMM_DIST="${JAVACOMM_DIST_PREFIX}-ppc64.tgz"
 PPC64_JAVACOMM_DIST_ORIG="${JAVACOMM_DIST_PREFIX_ORIG}-ppc64.tgz"
 
-if use x86; then
-	JDK_DIST=${X86_JDK_DIST}
-	JAVACOMM_DIST=${X86_JAVACOMM_DIST}
-	JAVACOMM_DIST_ORIG=${X86_JAVACOMM_DIST_ORIG}
-	S="${WORKDIR}/ibm-java-i386-60"
-	LINK_ARCH="intel"
-elif use amd64; then
-	JDK_DIST=${AMD64_JDK_DIST}
-	JAVACOMM_DIST=${AMD64_JAVACOMM_DIST}
-	JAVACOMM_DIST_ORIG=${AMD64_JAVACOMM_DIST_ORIG}
-	S="${WORKDIR}/ibm-java-x86_64-60"
-	LINK_ARCH="amd64"
-elif use ppc; then
-	JDK_DIST=${PPC_JDK_DIST}
-	JAVACOMM_DIST=${PPC_JAVACOMM_DIST}
-	JAVACOMM_DIST_ORIG=${PPC_JAVACOMM_DIST_ORIG}
-	S="${WORKDIR}/ibm-java-ppc-60"
-	LINK_ARCH="ipseries32"
-elif use ppc64; then
-	JDK_DIST=${PPC64_JDK_DIST}
-	JAVACOMM_DIST=${PPC64_JAVACOMM_DIST}
-	JAVACOMM_DIST_ORIG=${PPC64_JAVACOMM_DIST_ORIG}
-	S="${WORKDIR}/ibm-java-ppc64-60"
-	LINK_ARCH="ipseries64"
-fi
-
-DIRECT_DOWNLOAD="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?source=swg-sdk6&S_PKG=${LINK_ARCH}_6sr${SERVICE_RELEASE}${FP_LINK}&S_TACT=105AGX05&S_CMP=JDK"
-
-SLOT="1.6"
 DESCRIPTION="IBM Java SE Development Kit"
 HOMEPAGE="http://www.ibm.com/developerworks/java/jdk/"
-DOWNLOADPAGE="${HOMEPAGE}linux/download.html"
-# bug #125178
-ALT_DOWNLOADPAGE="${HOMEPAGE}linux/older_download.html"
-
 SRC_URI="
 	x86? ( ${X86_JDK_DIST} )
 	amd64? ( ${AMD64_JDK_DIST} )
@@ -93,8 +62,10 @@ SRC_URI="
 		ppc? ( ${PPC_JAVACOMM_DIST} )
 		ppc64? ( ${PPC64_JAVACOMM_DIST} )
 	)"
+
 LICENSE="IBM-J1.6"
-KEYWORDS="-* amd64 ppc64 x86"
+SLOT="1.6"
+KEYWORDS="-* ~amd64 ~ppc64 ~x86"
 RESTRICT="fetch"
 IUSE="X alsa doc examples javacomm nsplugin odbc selinux"
 
@@ -179,7 +150,43 @@ opt/${P}/jre/lib/amd64/compressedrefs/libj9gc24.so
 opt/${P}/jre/lib/amd64/compressedrefs/libj9bcv24.so
 opt/${P}/jre/lib/amd64/compressedrefs/libj9ute24.so"
 
+_init_at_vars() {
+	if use x86; then
+		JDK_DIST=${X86_JDK_DIST}
+		JAVACOMM_DIST=${X86_JAVACOMM_DIST}
+		JAVACOMM_DIST_ORIG=${X86_JAVACOMM_DIST_ORIG}
+		S="${WORKDIR}/ibm-java-i386-60"
+		LINK_ARCH="intel"
+	elif use amd64; then
+		JDK_DIST=${AMD64_JDK_DIST}
+		JAVACOMM_DIST=${AMD64_JAVACOMM_DIST}
+		JAVACOMM_DIST_ORIG=${AMD64_JAVACOMM_DIST_ORIG}
+		S="${WORKDIR}/ibm-java-x86_64-60"
+		LINK_ARCH="amd64"
+	elif use ppc; then
+		JDK_DIST=${PPC_JDK_DIST}
+		JAVACOMM_DIST=${PPC_JAVACOMM_DIST}
+		JAVACOMM_DIST_ORIG=${PPC_JAVACOMM_DIST_ORIG}
+		S="${WORKDIR}/ibm-java-ppc-60"
+		LINK_ARCH="ipseries32"
+	elif use ppc64; then
+		JDK_DIST=${PPC64_JDK_DIST}
+		JAVACOMM_DIST=${PPC64_JAVACOMM_DIST}
+		JAVACOMM_DIST_ORIG=${PPC64_JAVACOMM_DIST_ORIG}
+		S="${WORKDIR}/ibm-java-ppc64-60"
+		LINK_ARCH="ipseries64"
+	fi
+}
+
 pkg_nofetch() {
+	_init_at_vars
+
+	DIRECT_DOWNLOAD="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?source=swg-sdk6"
+	DIRECT_DOWNLOAD+="&S_PKG=${LINK_ARCH}_6sr${SERVICE_RELEASE}${FP_LINK}&S_TACT=105AGX05&S_CMP=JDK"
+	DOWNLOADPAGE="${HOMEPAGE}linux/download.html"
+	# bug #125178
+	ALT_DOWNLOADPAGE="${HOMEPAGE}linux/older_download.html"
+
 	einfo "Due to license restrictions, we cannot redistribute or fetch the distfiles"
 	einfo "Please visit: ${DOWNLOADPAGE}"
 
@@ -203,14 +210,17 @@ pkg_nofetch() {
 }
 
 src_unpack() {
+	_init_at_vars
+
 	unpack ${JDK_DIST}
 	if use javacomm; then
 		mkdir "${WORKDIR}/javacomm/" || die
 		cd "${WORKDIR}/javacomm/"
 		unpack ${JAVACOMM_DIST}
 	fi
-	cd "${S}"
+}
 
+src_prepare() {
 	# bug #126105
 	epatch "${FILESDIR}/${PN}-jawt.h.patch"
 }
@@ -220,45 +230,41 @@ src_compile() { :; }
 src_install() {
 	# Copy all the files to the designated directory
 	dodir /opt/${P}
-	cp -pR "${S}"/{bin,jre,lib,include,src.zip} "${D}/opt/${P}/" || die
+	cp -pPR bin jre lib include src.zip "${ED}/opt/${P}" || die
 
 	if use examples; then
-		cp -pPR "${S}"/demo "${D}"/opt/${P}/ || die
+		cp -pPR demo "${ED}"/opt/${P} || die
 	fi
 	if use javacomm; then
 		chmod -x "${WORKDIR}"/javacomm/*/jar/*.jar "${WORKDIR}"/javacomm/*/lib/*.properties || die
-		cp -pR "${WORKDIR}"/javacomm/*/jar/*.jar "${D}"/opt/${P}/jre/lib/ext/ || die
-		cp -pR "${WORKDIR}"/javacomm/*/lib/*.properties "${D}"/opt/${P}/jre/lib/ || die
-		cp -pR "${WORKDIR}"/javacomm/*/lib/*.so "${D}"/opt/${P}/jre/lib/$(get_system_arch)/ || die
+		cp -pR "${WORKDIR}"/javacomm/*/jar/*.jar "${ED}"/opt/${P}/jre/lib/ext/ || die
+		cp -pR "${WORKDIR}"/javacomm/*/lib/*.properties "${ED}"/opt/${P}/jre/lib/ || die
+		cp -pR "${WORKDIR}"/javacomm/*/lib/*.so "${ED}"/opt/${P}/jre/lib/$(get_system_arch)/ || die
 		if use examples; then
-			cp -pPR "${WORKDIR}"/javacomm/*/examples "${D}"/opt/${P}/ || die
+			cp -pPR "${WORKDIR}"/javacomm/*/examples "${ED}"/opt/${P}/ || die
 		fi
 	fi
 
 	if use x86 || use ppc; then
+		local plugin="/opt/${P}/jre/plugin/$(get_system_arch)/ns7/libjavaplugin_oji.so"
 		if use nsplugin; then
-			local plugin="/opt/${P}/jre/plugin/$(get_system_arch)/ns7/libjavaplugin_oji.so"
 			install_mozilla_plugin "${plugin}"
+		else
+			rm "${ED}${plugin}" || die
 		fi
 	fi
 
-	local desktop_in="${D}/opt/${P}/jre/plugin/desktop/sun_java.desktop"
-	if [[ -f "${desktop_in}" ]]; then
-		local desktop_out="${T}/ibm_jdk-${SLOT}.desktop"
-		# install control panel for Gnome/KDE
-		# The jre also installs these so make sure that they do not have the same
-		# Name
-		sed -e "s/\(Name=\)Java/\1 Java Control Panel for IBM JDK ${SLOT}/" \
-			-e "s#Exec=.*#Exec=/opt/${P}/jre/bin/jcontrol#" \
-			-e "s#Icon=.*#Icon=/opt/${P}/jre/plugin/desktop/sun_java.png#" \
-			"${desktop_in}" > \
-			"${desktop_out}" || die
+	# Install desktop file for the Java Control Panel. Using VMHANDLE as file
+	# name to prevent file collision with jre and or other slots.
+	sed -e "s/\(Name=\)Java/\1 Java Control Panel for IBM JDK ${SLOT}/" \
+		-e "s#Exec=.*#Exec=${EPREFIX}/opt/${P}/jre/bin/jcontrol#" \
+		-e "s#Icon=.*#Icon=${EPREFIX}/opt/${P}/jre/plugin/desktop/sun_java.png#" \
+		"${ED}"/opt/${P}/jre/plugin/desktop/sun_java.desktop \
+		> "${T}"/${VMHANDLE}.desktop || die
+	domenu "${T}"/${VMHANDLE}.desktop || die
 
-		domenu "${desktop_out}" || die
-	fi
-
-	dohtml -a html,htm,HTML -r docs || die
-	dodoc "${S}"/{copyright,notices.txt,readmefirst.lnx.txt} || die
+	dohtml -a html,htm,HTML -r docs
+	dodoc copyright notices.txt readmefirst.lnx.txt
 
 	set_java_env
 
@@ -266,16 +272,13 @@ src_install() {
 	# this is not optimal, using -Xcompressedrefs would probably make it
 	# expect the compressedrefs version...
 	if use amd64; then
-		sed -i -e "s|vm.jar|amd64/default/jclSC160/vm.jar|g" "${D}${JAVA_VM_CONFIG_DIR}/${VMHANDLE}" || die "sed failed"
+		sed -i -e "s|vm.jar|amd64/default/jclSC160/vm.jar|g" "${ED}${JAVA_VM_CONFIG_DIR}/${VMHANDLE}" || die "sed failed"
 	fi
 	if use ppc64; then
-		sed -i -e "s|vm.jar|ppc64/default/jclSC160/vm.jar|g" "${D}${JAVA_VM_CONFIG_DIR}/${VMHANDLE}" || die "sed failed"
+		sed -i -e "s|vm.jar|ppc64/default/jclSC160/vm.jar|g" "${ED}${JAVA_VM_CONFIG_DIR}/${VMHANDLE}" || die "sed failed"
 	fi
 
+	java-vm_set-pax-markings "${ED}"/opt/${P}
 	java-vm_revdep-mask
-
-	# bug #321695
-	dodir /etc/sandbox.d
-	echo 'SANDBOX_PREDICT="/proc/self/coredump_filter"' > "${D}/etc/sandbox.d/20${VMHANDLE}"
+	java-vm_sandbox-predict	/proc/cpuinfo /proc/self/coredump_filter /proc/self/maps
 }
-
