@@ -17,7 +17,7 @@ IUSE="doc +luajit"
 FEATURES="keeptemp keepwork"
 
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
-				luajit? ( dev-lang/luajit:2= )"
+		luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 		virtual/pkgconfig
 		>=dev-qt/qtcore-4.8.6-r2
@@ -52,7 +52,7 @@ src_compile() {
 	cmake-utils_src_compile
 	elog ${WORKDIR}
 	elog ${S}
-	 #* /tmp/portage/dev-lua/torch-qtlua-9999/work
+	# * /tmp/portage/dev-lua/torch-qtlua-9999/work
  	#* /tmp/portage/dev-lua/torch-qtlua-9999/work/torch-qtlua-9999
 
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
