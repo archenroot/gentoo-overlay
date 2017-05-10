@@ -1,0 +1,18 @@
+#!/sbin/runscript
+# Copyright 1999-2014 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+[ -d /var/run/local ] || mkdir -m=777 /var/run/local
+
+pidfile="/var/run/local/solr-8983.pid"
+command="/opt/solr/bin/solr"
+command_args="start"
+start_stop_daemon_args="-u solr"
+
+
+depend() {
+    use net
+}
+
+
