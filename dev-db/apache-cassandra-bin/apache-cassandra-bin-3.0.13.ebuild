@@ -1,6 +1,5 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 inherit user
@@ -11,7 +10,6 @@ DESCRIPTION="The Apache Cassandra database is the right choice when you need
 scalability and high availability without compromising performance."
 HOMEPAGE="http://cassandra.apache.org/"
 SRC_URI="mirror://apache/${MY_PN}/${PV}/apache-${MY_PN}-${PV}-bin.tar.gz"
-SRC_URI="http://apache.cu.be/cassandra/3.0.13/apache-cassandra-3.0.13-bin.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
@@ -20,7 +18,6 @@ IUSE=""
 DEPEND="virtual/jre"
 RDEPEND="$DEPEND"
 
-
 S="${WORKDIR}/apache-${MY_PN}-${PV}"
 INSTALL_DIR="/opt/${MY_PN}-${PV}"
 
@@ -28,7 +25,6 @@ pkg_setup() {
 	enewgroup hadoop
 	enewuser cassandra -1 /bin/bash /home/cassandra hadoop
 }
-
 
 src_install() {
 	# get the topology from /etc/hosts
@@ -45,28 +41,28 @@ src_install() {
 	# update JVM mem for sandbox
 	if [ $sandbox -ne 0 ] ; then
 		sed -e "1iexport MAX_HEAP_SIZE=256M" \
-			-e "2iexport HEAP_NEWSIZE=256M" -i conf/cassandra-env.sh || die
+			-e "2iexport HEAP_NEWSIZE=256M" -i conf/cassandra-env.sh
 	fi
 	# update yaml for cluster case
 	sed -e "s|listen_address: localhost|# listen_address: not used|" \
-		-e "s|# listen_interface: .*|listen_interface: eth0|" -i conf/cassandra.yaml || die
+		-e "s|# listen_interface: .*|listen_interface: eth0|" -i conf/cassandra.yaml
 	if [[ -n $seeds ]] ; then
 		sed -e  "s|seeds: .*|seeds: \"${seeds}\"|" -i conf/cassandra.yaml
 	fi
 	# update storage dir
 	sed -e "s|cassandra_storagedir=\"\$CASSANDRA_HOME/data\"|cassandra_storagedir=\"/var/lib/cassandra/\"|g" \
-		-i bin/cassandra.in.sh || die
+		-i bin/cassandra.in.sh
 	# update log dir
 	sed -e "s|cassandra.logdir=\$CASSANDRA_HOME\/logs|cassandra.logdir=\/var\/log\/cassandra|g" \
-		-i bin/cassandra || die
+		-i bin/cassandra
 	# update pyspark
-	sed -e "s|python |python2 |g" -i bin/cqlsh || die
+	sed -e "s|python |python2 |g" -i bin/cqlsh
 
 	#install
-	insinto ${INSTALL_DIR}
+	insinto "${INSTALL_DIR}"
 	doins -r conf interface lib pylib tools
-	mv "${S}"/bin "${D}${INSTALL_DIR}/bin"
-	fowners -R cassandra:hadoop ${INSTALL_DIR}
+	mv "${S}/bin" "${D}${INSTALL_DIR}/bin"
+	fowners -R cassandra:hadoop "${INSTALL_DIR}"
 	diropts -m770 -o root -g hadoop
 	dodir /var/log/cassandra
 	dodir /var/lib/cassandra
@@ -75,7 +71,7 @@ src_install() {
 PATH="${INSTALL_DIR}/bin"
 EOF
 	doenvd 99cassandra
-	newinitd ${FILESDIR}/cassandra cassandra
+	newinitd "${FILESDIR}/cassandra" cassandra
 
-	dosym ${INSTALL_DIR} /opt/${MY_PN}
+	dosym "${INSTALL_DIR}" "/opt/${MY_PN}"
 }

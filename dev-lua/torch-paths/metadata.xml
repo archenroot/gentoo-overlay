@@ -3,10 +3,10 @@
 <pkgmetadata>
   <upstream>
     <bugs-to>https://github.com/torch/path/issues</bugs-to>
-    <changelog>ttps://github.com/torch/path/blob/master/CHANGELOG.md</changelog>
+    <changelog>https://github.com/torch/path/blob/master/CHANGELOG.md</changelog>
     <doc>https://github.com/torch/path/blob/master/README.md</doc>
   </upstream>
-  <maintainer type="project">
+  <maintainer type="person">
     <email>archenroot@gmail.com</email>
     <name>Ladislav Jech</name>
   </maintainer>

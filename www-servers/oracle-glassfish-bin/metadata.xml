@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer>
+  <maintainer type="person">
     <email>archenroot@gmail.com</email>
-    <name>Siel aep Archen</name>
+    <name>Ladislav Lech</name>
   </maintainer>
   <longdescription>
     GlassFish is a Java application server project created by Sun Microsystems
@@ -17,4 +17,3 @@
     https://java.net/projects/glassfish/sources/svn/show/trunk/main
   </longdescription>
 </pkgmetadata>
-

@@ -1,3 +1,6 @@
+# Copyright 1999-2017 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
 inherit java-pkg-2 rpm
 
 DESCRIPTION="Extensible continuous integration server"
@@ -16,23 +19,23 @@ RDEPEND="${DEPEND}
 >=virtual/jdk-1.5"
 
 src_unpack() {
-rpm_src_unpack ${A}
+	rpm_src_unpack ${A}
 }
 
 pkg_setup() {
-enewgroup hudson
-enewuser hudson -1 /bin/bash /var/lib/hudson hudson
+	enewgroup hudson
+	enewuser hudson -1 /bin/bash /var/lib/hudson hudson
 }
 
 src_install() {
-keepdir /var/run/hudson /var/log/hudson
-keepdir /var/lib/hudson/home /var/lib/hudson/backup
+	keepdir /var/run/hudson /var/log/hudson
+	keepdir /var/lib/hudson/home /var/lib/hudson/backup
 
-insinto /usr/lib/hudson
-doins usr/lib/hudson/hudson.war
+	insinto /usr/lib/hudson
+	doins usr/lib/hudson/hudson.war
 
-newinitd "${FILESDIR}/init.sh" hudson
-newconfd "${FILESDIR}/conf" hudson
+	newinitd "${FILESDIR}/init.sh" hudson
+	newconfd "${FILESDIR}/conf" hudson
 
-fowners hudson:hudson /var/run/hudson /var/log/hudson /var/lib/hudson /var/lib/hudson/home /var/lib/hudson/backup
+	fowners hudson:hudson /var/run/hudson /var/log/hudson /var/lib/hudson /var/lib/hudson/home /var/lib/hudson/backup
 }

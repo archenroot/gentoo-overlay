@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -19,7 +19,7 @@ COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
 		luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig"
-RDEPEND="${COMMON_DEPEND} ${DEPEND}"
+RDEPEND="${COMMON_DEPEND}"
 
 src_install() {
 	insinto "$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))/class"

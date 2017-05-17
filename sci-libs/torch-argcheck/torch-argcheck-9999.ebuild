@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -16,10 +15,10 @@ KEYWORDS="~amd64"
 IUSE="doc +luajit"
 
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
-				luajit? ( dev-lang/luajit:2= )"
+		luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 		virtual/pkgconfig"
-RDEPEND="${COMMON_DEPEND} ${DEPEND}"
+RDEPEND="${COMMON_DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
@@ -34,4 +33,3 @@ src_configure() {
 	)
 	cmake-utils_src_configure
 }
-

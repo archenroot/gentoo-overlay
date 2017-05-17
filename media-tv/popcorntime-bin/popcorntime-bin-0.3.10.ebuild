@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=6
 
@@ -30,9 +29,9 @@ src_install() {
 	doexe Popcorn-Time
 
 	insinto /opt/${PN}
-	doins -r src node_modules icudtl.dat locales LICENSE.txt lib nw_100_percent.pak nw_200_percent.pak package.json resources.pak snapshot_blob.bin pnacl CHANGELOG.md chromedriver credits.html minidump_stackwalk nacl_helper nacl_helper_bootstrap nacl_irt_x86_64.nexe natives_blob.bin nwjc payload README.md 
-    
-    dosym /$(get_libdir)/libudev.so.1 /opt/${PN}/libudev.so.0
+	doins -r src node_modules icudtl.dat locales LICENSE.txt lib nw_100_percent.pak nw_200_percent.pak package.json resources.pak snapshot_blob.bin pnacl CHANGELOG.md chromedriver credits.html minidump_stackwalk nacl_helper nacl_helper_bootstrap nacl_irt_x86_64.nexe natives_blob.bin nwjc payload README.md
+
+	dosym /$(get_libdir)/libudev.so.1 /opt/${PN}/libudev.so.0
 	dosym /opt/${PN}/Popcorn-Time /usr/bin/${PN}
 	make_wrapper ${PN} ./Popcorn-Time /opt/${PN} /opt/bin
 

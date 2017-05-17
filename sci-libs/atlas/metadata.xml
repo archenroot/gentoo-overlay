@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<maintainer type="project">
+<maintainer type="person">
   <email>archenroot@gmail.com</email>
-  <name>Gentoo AI Project</name>
+  <name>Ladislav Lech</name>
 </maintainer>
 <longdescription lang="en">
   Atlas math library.
 </longdescription>
-<use>
-  <flag name="geant4">Enable interaction with Geant4(<pkg>sci-physics/geant</pkg>:4) </flag>
-  <flag name="root">Enable interactions with ROOT (<pkg>sci-physics/root</pkg>) </flag>
-</use>
 </pkgmetadata>
-

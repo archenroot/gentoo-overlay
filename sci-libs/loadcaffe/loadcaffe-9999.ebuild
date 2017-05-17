@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -10,17 +9,18 @@ DESCRIPTION="Load Caffe networks in Torch7."
 HOMEPAGE="https://github.com/szagoruyko/loadcaffe"
 EGIT_REPO_URI="https://github.com/szagoruyko/loadcaffe.git"
 
-LICENSE="BSD2"
+LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="examples luajit"
 
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
 		luajit? ( dev-lang/luajit:2= )"
-DEPEND="${COMMON_DEPEND}
-		virtual/pkgconfig
+RDEPEND="${COMMON_DEPEND}
 		=dev-libs/protobuf-3.1.0"
-RDEPEND="${DEPEND}"
+DEPEND="${DEPEND}
+		virtual/pkgconfig
+"
 
 BUILD_DIR="${WORKDIR}/${P}/build"
 
