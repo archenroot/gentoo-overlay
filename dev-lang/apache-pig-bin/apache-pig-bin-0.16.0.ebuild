@@ -1,6 +1,5 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -21,7 +20,6 @@ RDEPEND="sys-cluster/apache-hadoop-bin"
 S="${WORKDIR}/${MY_PN}-${PV}"
 INSTALL_DIR="/opt/${MY_PN}-${PV}"
 
-
 src_install() {
 	dobin bin/pig
 	dodir "${INSTALL_DIR}"
@@ -36,4 +34,3 @@ EOF
 	doenvd 99pig
 	dosym ${INSTALL_DIR} /opt/${MY_PN}
 }
-
