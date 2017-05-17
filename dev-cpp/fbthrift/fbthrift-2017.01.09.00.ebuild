@@ -1,4 +1,6 @@
-# cat dev-cpp/fbthrift/fbthrift-0.31.0.ebuild
+# Copyright 1999-2017 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
 EAPI=5
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
@@ -24,7 +26,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${P}/thrift"
 
 #src_configure() {
-#   autotools-utils_src_prepare
-#    PYTHON=2 PYTHON_VERSION=2 econf
-#   #epatch "${FILESDIR}/gcc.patch"
+#	autotools-utils_src_prepare
+#	PYTHON=2 PYTHON_VERSION=2 econf
+#	#epatch "${FILESDIR}/gcc.patch"
 #}
