@@ -1,10 +1,9 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=5
 
-MY_PN=${PN/-bin/}
+MY_PN="${PN/-bin/}"
 inherit unpacker eutils
 
 DESCRIPTION="Tool for building and distributing virtual machines"
@@ -13,8 +12,8 @@ HOMEPAGE="http://vagrantup.com/"
 SRC_URI_AMD64="https://dl.bintray.com/mitchellh/${MY_PN}/${MY_PN}_${PV}_x86_64.deb"
 SRC_URI_X86="https://dl.bintray.com/mitchellh/${MY_PN}/${MY_PN}_${PV}_i686.deb"
 SRC_URI="
-    amd64? ( ${SRC_URI_AMD64} )
-    x86? ( ${SRC_URI_X86} )
+	amd64? ( ${SRC_URI_AMD64} )
+	x86? ( ${SRC_URI_X86} )
 "
 
 LICENSE="MIT"
@@ -39,8 +38,8 @@ src_unpack() {
 
 src_install() {
 	local dir="/opt/${MY_PN}"
-	dodir ${dir}
-	cp -ar ./* "${ED}${dir}" || die "copy files failed"
+	dodir "${dir}"
+	cp -ar ./* "${ED}${dir}"
 
 	make_wrapper "${MY_PN}" "${dir}/bin/${MY_PN}"
 }

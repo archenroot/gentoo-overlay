@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -14,7 +13,6 @@ LICENSE="BSD3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+luajit +cuda"
-
 
 DEPEND=">=dev-lang/lua-5.1:=
 		dev-lang/luajit:2
@@ -44,10 +42,10 @@ src_configure() {
 src_install() {
 	rm -f /dev/nvidia-uvm
 
-        cmake-utils_src_install
-        mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
-        mv "${D}"/usr/lib/libcutorch.so "${D}"/usr/lib/lua/5.1/
-        mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
-        rm -rf "${D}"/usr/lua
+	cmake-utils_src_install
+	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
+	mv "${D}"/usr/lib/libcutorch.so "${D}"/usr/lib/lua/5.1/
+	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
+	rm -rf "${D}"/usr/lua
 
 }

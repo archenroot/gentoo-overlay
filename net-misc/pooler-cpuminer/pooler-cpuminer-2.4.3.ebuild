@@ -1,4 +1,4 @@
-# Copyright 2008-2012 Funtoo Technologies
+# Copyright 2008-2017 Funtoo Technologies
 
 EAPI=5
 inherit eutils
@@ -16,10 +16,10 @@ DEPEND="net-misc/curl"
 RDEPEND="${DEPEND}"
 
 MY_P="cpuminer-${PV}"
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}/${MY_P}"
 
 src_install() {
 	make DESTDIR="${D}" install
-	newconfd ${FILESDIR}/minerd.confd minerd
-	newinitd ${FILESDIR}/minerd.initd minerd
+	newconfd "${FILESDIR}/minerd.confd" minerd
+	newinitd "${FILESDIR}/minerd.initd" minerd
 }

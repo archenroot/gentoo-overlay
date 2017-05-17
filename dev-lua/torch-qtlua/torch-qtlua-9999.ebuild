@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -14,16 +13,17 @@ LICENSE="BSD3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc +luajit"
-FEATURES="keeptemp keepwork"
+#FEATURES="keeptemp keepwork"
 
 COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
 		luajit? ( dev-lang/luajit:2= )"
-DEPEND="${COMMON_DEPEND}
-		virtual/pkgconfig
+RDEPEND="${COMMON_DEPEND}
 		>=dev-qt/qtcore-4.8.6-r2
 		>=dev-qt/designer-4.8.6-r1
 		>=dev-qt/qtsvg-4.8.6-r1"
-RDEPEND="${COMMON_DEPEND} ${DEPEND}"
+DEPEND="${COMMON_DEPEND}
+		virtual/pkgconfig
+"
 
 src_configure() {
 	local mycmakeargs=(
@@ -46,29 +46,27 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-
 src_compile() {
 	elog "===================== COMPILE PHASE"
 	cmake-utils_src_compile
 	elog ${WORKDIR}
 	elog ${S}
 	# * /tmp/portage/dev-lua/torch-qtlua-9999/work
- 	#* /tmp/portage/dev-lua/torch-qtlua-9999/work/torch-qtlua-9999
+	#* /tmp/portage/dev-lua/torch-qtlua-9999/work/torch-qtlua-9999
 
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
 	mv "${S}"/*.so "${D}"/usr/lib/lua/5.1/
 	mv /tmp/portage/dev-lua/torch-qtlua-9999/work/torch-qtlua-9999/libqtcore.so /root
-    mv "${D}"/usr/lib/*.so "${D}"/usr/lib/lua/5.1/
+	mv "${D}"/usr/lib/*.so "${D}"/usr/lib/lua/5.1/
 }
+
 src_install() {
 	elog "===================== INSTALL PHASE"
 	cmake-utils_src_install
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
-	
+
 	mv "${S}"/*.so "${D}"/usr/lib/lua/5.1/
-    mv "${S}"/usr/lib/*.so "${D}"/usr/lib/lua/5.1/
-    mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
-    rm -rf "${D}"/usr/lua
+	mv "${S}"/usr/lib/*.so "${D}"/usr/lib/lua/5.1/
+	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
+	rm -rf "${D}"/usr/lua
 }
-
-
