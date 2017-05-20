@@ -1,0 +1,27 @@
+diff --git a/src/linux/ns.hpp b/src/linux/ns.hpp
+index da4b716..03ee460 100644
+--- a/src/linux/ns.hpp
++++ b/src/linux/ns.hpp
+@@ -80,22 +80,6 @@
+ #define CLONE_NEWCGROUP 0x02000000
+ #endif
+ 
+-// Define a 'setns' for compilation environments that don't already
+-// have one.
+-inline int setns(int fd, int nstype)
+-{
+-#ifdef SYS_setns
+-  return ::syscall(SYS_setns, fd, nstype);
+-#elif __x86_64__
+-  // A workaround for those hosts that have an old glibc (older than
+-  // 2.14) but have a new kernel. The magic number '308' here is the
+-  // syscall number for 'setns' on x86_64 architecture.
+-  return ::syscall(308, fd, nstype);
+-#else
+-#error "setns is not available"
+-#endif
+-}
+-
+ namespace ns {
+ 
+ // Returns the nstype (e.g., CLONE_NEWNET, CLONE_NEWNS, etc.) for the
