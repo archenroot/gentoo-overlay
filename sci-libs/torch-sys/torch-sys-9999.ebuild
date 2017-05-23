@@ -9,7 +9,7 @@ DESCRIPTION="Torch module for system functions."
 HOMEPAGE="https://github.com/torch/sys"
 EGIT_REPO_URI="https://github.com/torch/sys.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE=""

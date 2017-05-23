@@ -9,7 +9,7 @@ DESCRIPTION="Paths manipulation library for Lua."
 HOMEPAGE="https://github.com/torch/paths"
 EGIT_REPO_URI="https://github.com/torch/paths.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc luajit"

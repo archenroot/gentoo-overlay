@@ -9,7 +9,7 @@ DESCRIPTION="A powerful (and blazing fast) argument checker and function overloa
 HOMEPAGE="https://github.com/torch/argcheck"
 EGIT_REPO_URI="https://github.com/torch/argcheck.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc +luajit"

@@ -9,7 +9,7 @@ DESCRIPTION="A very simple camera interface (frame grabber) for Torch7."
 HOMEPAGE="https://github.com/clementfarabet/lua---camera"
 EGIT_REPO_URI="https://github.com/clementfarabet/lua---camera.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc +luajit"

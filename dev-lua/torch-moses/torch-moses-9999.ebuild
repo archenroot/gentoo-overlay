@@ -9,7 +9,7 @@ DESCRIPTION="Torch module for image processing."
 HOMEPAGE="https://github.com/Yonaba/Moses"
 EGIT_REPO_URI="https://github.com/Yonaba/Moses.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE="luajit"

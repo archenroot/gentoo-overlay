@@ -9,7 +9,7 @@ DESCRIPTION="Torch FFI bindings for nvidia-cuda-cudnn."
 HOMEPAGE="https://github.com/soumith/cudnn.torch"
 EGIT_REPO_URI="https://github.com/soumith/cudnn.torch.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE=""

@@ -9,7 +9,7 @@ DESCRIPTION="Torch module for CUDA."
 HOMEPAGE="https://github.com/torch/cutorch"
 EGIT_REPO_URI="https://github.com/torch/cutorch.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+luajit +cuda"

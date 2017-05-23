@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/torch/xlua"
 
 EGIT_REPO_URI="https://github.com/torch/xlua.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE=""

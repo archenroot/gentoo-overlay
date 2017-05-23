@@ -10,7 +10,7 @@ DESCRIPTION="Object classes for Lua"
 HOMEPAGE="https://github.com/torch/class"
 EGIT_REPO_URI="https://github.com/torch/class.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc luajit"

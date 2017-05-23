@@ -12,7 +12,7 @@ DESCRIPTION="Torch is a Lua-based suite for scientific computations based on mul
 HOMEPAGE="https://github.com/torch/torch7"
 EGIT_REPO_URI="https://github.com/torch/torch7.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+minimal cuda cudnn luajit opencl"

@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -10,7 +9,7 @@ DESCRIPTION="TREPL is a command-line REPL for Torch."
 HOMEPAGE="https://github.com/archenroot/trepl"
 EGIT_REPO_URI="https://github.com/archenroot/trepl.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc luajit"

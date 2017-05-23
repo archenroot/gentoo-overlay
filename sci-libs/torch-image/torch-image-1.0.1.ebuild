@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -10,7 +9,7 @@ DESCRIPTION="Torch module for image processing."
 HOMEPAGE="https://github.com/torch/image"
 EGIT_REPO_URI="https://github.com/torch/image.git"
 EGIT_REPO_COMMIT="166a04da9f36dd7c3480c3925a00440486efc75a"
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE="luajit"

@@ -9,7 +9,7 @@ DESCRIPTION="cwrap helps generate Lua/C wrappers to interface with C functions."
 HOMEPAGE="https://github.com/torch/cwrap"
 EGIT_REPO_URI="https://github.com/torch/cwrap.git"
 
-LICENSE="BSD3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc luajit"
