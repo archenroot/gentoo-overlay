@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -29,7 +28,7 @@ S="${WORKDIR}/${P}/"
 #PATCHES=( "${FILESDIR}/${PN}-0.57.0-really-fix-boost161.diff" )
 
 src_prepare() {
-        cmake-utils_src_prepare
+	cmake-utils_src_prepare
 }
 
 src_configure() {

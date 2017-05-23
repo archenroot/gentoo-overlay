@@ -1,6 +1,5 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -10,10 +9,10 @@ FORTRAN_STANDARD="77 90"
 inherit cuda eutils flag-o-matic fortran-2 multilib toolchain-funcs versionator python-any-r1
 
 remove_unsupported_flags() {
-        declare setting
+	declare setting
 
-       	# Latest skylake not supported -> magmablas/zgeadd.cu:1:0: error: bad value (skylake) for -march= switch
-        replace-cpu-flags skylake broadwell
+	# Latest skylake not supported -> magmablas/zgeadd.cu:1:0: error: bad value (skylake) for -march= switch
+	replace-cpu-flags skylake broadwell
 }
 
 DESCRIPTION="Matrix Algebra on GPU and Multicore Architectures"
@@ -46,14 +45,14 @@ pkg_setup() {
 
 src_prepare() {
 	# distributed pc file not so useful so replace it
-	cat <<-EOF > ${PN}.pc
-		prefix=${EPREFIX}/usr
+	cat <<-EOF > "${PN}.pc"
+		prefix="${EPREFIX}/usr"
 		libdir=\${prefix}/$(get_libdir)
-		includedir=\${prefix}/include/${PN}
-		Name: ${PN}
-		Description: ${DESCRIPTION}
-		Version: ${PV}
-		URL: ${HOMEPAGE}
+		includedir"\${prefix}/include/${PN}
+		Name: "${PN}"
+		Description: "${DESCRIPTION}"
+		Version: "${PV}"
+		URL: "${HOMEPAGE}"
 		Libs: -L\${libdir} -lmagma
 		Libs.private: -lm -lpthread -ldl -lcublas -lcudart
 		Cflags: -I\${includedir}
@@ -67,8 +66,8 @@ src_prepare() {
 	else
 		elog "Cannot detect compiler type so not setting openmp support"
 	fi
-	append-flags -fPIC ${eopenmp}
-	append-ldflags -Wl,-soname,lib${PN}.so.2.2 ${eopenmp}
+	append-flags -fPIC "${eopenmp}"
+	append-ldflags -Wl,-soname,lib${PN}.so.2.2 "${eopenmp}"
 	# Added to prevent compile with skylake on GCC 6.2
 	remove_unsupported_flags
 	cuda_src_prepare
@@ -79,7 +78,7 @@ src_configure() {
 		ARCH = $(tc-getAR)
 		ARCHFLAGS = cr
 		RANLIB = $(tc-getRANLIB)
-		CFLAGS    = -O3 -fPIC -DADD_ -Wall -fopenmp 
+		CFLAGS    = -O3 -fPIC -DADD_ -Wall -fopenmp
 		CXXFLAGS  = -O3 -fPIC -DADD_ -Wall -fopenmp -std=c++11
 		FFLAGS    = -O3 -fPIC -DADD_ -Wall -Wno-unused-dummy-argument
 		F90FLAGS  = -O3 -fPIC -DADD_ -Wall -Wno-unused-dummy-argument -x f95-cpp-input
@@ -89,15 +88,15 @@ src_configure() {
 		CC = $(tc-getCXX)
 		FORT = $(tc-getFC)
 		INC = -I"${EPREFIX}/opt/cuda/include" -DADD_ -DCUBLAS_GFORTRAN
-		OPTS = ${CFLAGS} -fPIC
-		FOPTS = ${FFLAGS} -fPIC -x f95-cpp-input
-		F77OPTS = ${FFLAGS} -fPIC
-		NVOPTS = -DADD_ -DUNIX ${NVCCFLAGS}
-		LDOPTS = ${LDFLAGS}
+		OPTS = "${CFLAGS}" -fPIC
+		FOPTS = "${FFLAGS}" -fPIC -x f95-cpp-input
+		F77OPTS = "${FFLAGS}" -fPIC
+		NVOPTS = -DADD_ -DUNIX "${NVCCFLAGS}"
+		LDOPTS = "${LDFLAGS}"
 		LOADER = $(tc-getFC)
 		LIBBLAS = $($(tc-getPKG_CONFIG) --libs cblas)
 		LIBLAPACK = $($(tc-getPKG_CONFIG) --libs lapack)
-		CUDADIR = ${EPREFIX}/opt/cuda
+		CUDADIR = "${EPREFIX}/opt/cuda"
 		LIBCUDA = -L\$(CUDADIR)/$(get_libdir) -lcublas -lcudart
 		LIB = -pthread -lm -ldl \$(LIBCUDA) \$(LIBBLAS) \$(LIBLAPACK) -lstdc++
 	EOF
@@ -106,9 +105,9 @@ src_configure() {
 	elif use fermi; then
 		echo >> make.inc "GPU_TARGET = Fermi"
 	elif use maxwell; then
-                echo >> make.inc "GPU_TARGET = Maxwell"
+		echo >> make.inc "GPU_TARGET = Maxwell"
 	elif use pascal; then
-                echo >> make.inc "GPU_TARGET = Pascal"
+		echo >> make.inc "GPU_TARGET = Pascal"
 	else # See http://icl.cs.utk.edu/magma/forum/viewtopic.php?f=2&t=227
 		echo >> make.inc "GPU_TARGET = Tesla"
 	fi
@@ -119,26 +118,26 @@ src_compile() {
 	emake shared
 	elog "======================  COMPILE PHASE ====================="
 	elog "lib/lib${PN}.so{,.2.2}"
-	mv lib/lib${PN}.so{,.2.2} || die
-	ln -sf lib${PN}.so.2.2 lib/lib${PN}.so.2 || die
-	ln -sf lib${PN}.so.2.2 lib/lib${PN}.so || die
+	mv "lib/lib${PN}.so{,.2.2}"
+	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so.2"
+	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so"
 }
 
 src_test() {
 	emake test lapacktest
-	cd testing/lin || die
+	cd testing/lin
 	# we need to access this while running the tests
 	addwrite /dev/nvidiactl
 	addwrite /dev/nvidia0
-	LD_LIBRARY_PATH="${S}"/lib ${EPYTHON} lapack_testing.py || die
+	LD_LIBRARY_PATH="${S}"/lib "${EPYTHON}" lapack_testing.py
 }
 
 src_install() {
 	dolib.so lib/lib*$(get_libname)*
 	use static-libs && dolib.a lib/lib*.a
-	insinto /usr/include/${PN}
+	insinto "/usr/include/${PN}"
 	doins include/*.h
 	insinto /usr/$(get_libdir)/pkgconfig
-	doins ${PN}.pc
+	doins "${PN}.pc"
 	dodoc README ReleaseNotes
 }

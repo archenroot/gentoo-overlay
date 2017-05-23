@@ -1,7 +1,7 @@
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="3"
+EAPI="3" #soon deprecated
 
 inherit eutils
 
@@ -18,9 +18,9 @@ RESTRICT="primaryuri"
 
 # Could make parallel and term::prograssbar optional
 DEPEND="
-  dev-vcs/git
-  >=dev-lang/perl-5
-  dev-perl/Parallel-Iterator
+	dev-vcs/git
+	>=dev-lang/perl-5
+	dev-perl/Parallel-Iterator
 "
 
 #  dev-perl/Term-ProgressBar
@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="$DEPEND"
 
 src_compile() {
-  emake prefix='/usr/bin' all
+	make prefix='/usr/bin' all #use emake (?)
 }
 
 src_install() {
@@ -47,7 +47,7 @@ src_install() {
 	dodoc LICENSE.TXT
 	dodoc README
 	dodoc ReleaseNotes
-    dodoc gits-man-page.html
+	dodoc gits-man-page.html
 	dodoc index.html
 	dodoc tutorial-basic.html
 	dodoc tutorial.css

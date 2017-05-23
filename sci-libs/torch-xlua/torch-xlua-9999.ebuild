@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -39,8 +38,8 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
-        #mv "${D}"/usr/lib/libcutorch.so "${D}"/usr/lib/lua/5.1/
-        mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
-        rm -rf "${D}"/usr/lua
-	
+	#mv "${D}"/usr/lib/libcutorch.so "${D}"/usr/lib/lua/5.1/
+	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
+	rm -rf "${D}"/usr/lua
+
 }

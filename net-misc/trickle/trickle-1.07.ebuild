@@ -1,8 +1,7 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-inherit base
+EAPI=6
 
 DESCRIPTION="A portable lightweight userspace bandwidth shaper"
 HOMEPAGE="http://monkey.org/~marius/pages/?page=trickle"
@@ -17,8 +16,13 @@ RESTRICT="mirror"
 DEPEND="dev-libs/libevent"
 RDEPEND="${DEPEND}"
 
-src_compile() {
-	base_src_compile configure
+S="${WORKDIR}/${P}"
+
+src_configure() {
+	econf
 	sed -i '/#define in_addr_t/ s:^://:' config.h
-	emake -j1 || die "make failed"
+}
+
+src_compile() {
+	emake -j1
 }

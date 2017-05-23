@@ -1,6 +1,5 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI="5"
 inherit user
@@ -21,9 +20,8 @@ DEPEND="scala? ( dev-lang/scala )"
 RDEPEND="virtual/jre
 scala? ( dev-lang/scala )"
 
-
 S="${WORKDIR}/${MY_PN}-${PV}-bin-hadoop2.6"
-INSTALL_DIR=/opt/${MY_PN}-${PV}
+INSTALL_DIR="/opt/${MY_PN}-${PV}"
 
 pkg_setup(){
 	enewgroup hadoop
@@ -40,7 +38,7 @@ src_install() {
 SPARK_LOG_DIR=/var/log/spark
 SPARK_PID_DIR=/var/run/pids
 SPARK_LOCAL_DIRS=/var/lib/spark
-SPARK_WORKER_MEMORY=${workmem}
+SPARK_WORKER_MEMORY="${workmem}"
 SPARK_WORKER_DIR=/var/lib/spark
 EOF
 
@@ -55,7 +53,7 @@ EOF
 	fowners -Rf root:hadoop "${INSTALL_DIR}"
 
 	# conf symlink
-	dosym ${INSTALL_DIR}/conf /etc/spark
+	dosym "${INSTALL_DIR}/conf" /etc/spark
 
 	cat > 99spark <<EOF
 SPARK_HOME="${INSTALL_DIR}"
