@@ -4,10 +4,16 @@
 
 EAPI=5
 
-EGIT_REPO_URI="git://github.com/BVLC/caffe.git"
+#EGIT_REPO_URI="git://github.com/BVLC/caffe.git"
 #EGIT_REPO_URI="git://github.com/NVIDIA/caffe"
-EGIT_REPO_COMMIT="eeebdab16155d34ff8f5f42137da7df4d1c7eab0"
-PYTHON_COMPAT=( python2_7 python3_4)
+# Original repository commit
+#EGIT_REPO_COMMIT="eeebdab16155d34ff8f5f42137da7df4d1c7eab0"
+
+# ArchenRoot fork of Caffe
+EGIT_REPO_URI="https://github.com/archenroot/caffe.git"
+EGIT_REPO_COMMIT="bd3d2b1176755d9319c538e0d64563b9e11a54f6"
+# python2_7 removed as it caused exception about missing Python.h file in compile time
+PYTHON_COMPAT=( python3_4)
 
 inherit toolchain-funcs multilib git-r3 python-single-r1
 # Can't use cuda.eclass as nvcc does not like --compiler-bindir set there for some reason
@@ -19,7 +25,7 @@ SRC_URI=""
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda python"
+IUSE="+cuda +python"
 
 CDEPEND="
 	dev-libs/boost:=[python?]
@@ -78,6 +84,8 @@ CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
 			 -gencode arch=compute_35,code=sm_35 \
 			 -gencode arch=compute_50,code=sm_50 \
 			 -gencode arch=compute_50,code=compute_50
+CUDA_ARCH := -gencode arch=compute_50,code=sm_50 \
+             -gencode arch=compute_50,code=compute_50
 EOF
 
 		# This should be handled by Makefile itself, but somehow is broken
@@ -89,6 +97,7 @@ EOF
 	if use python; then
 		python_export PYTHON_INCLUDEDIR PYTHON_SITEDIR PYTHON_LIBPATH
 		cat >> Makefile.config << EOF
+
 PYTHON_INCLUDE := "${PYTHON_INCLUDEDIR}" "${PYTHON_SITEDIR}/numpy/core/include"
 PYTHON_LIB := "$(dirname ${PYTHON_LIBPATH})"
 WITH_PYTHON_LAYER := 1
