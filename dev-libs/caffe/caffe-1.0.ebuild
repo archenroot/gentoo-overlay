@@ -13,7 +13,7 @@ EAPI=5
 EGIT_REPO_URI="https://github.com/archenroot/caffe.git"
 EGIT_REPO_COMMIT="bd3d2b1176755d9319c538e0d64563b9e11a54f6"
 # python2_7 removed as it caused exception about missing Python.h file in compile time
-PYTHON_COMPAT=( python3_4)
+PYTHON_COMPAT=( python3_4 )
 
 inherit toolchain-funcs multilib git-r3 python-single-r1
 # Can't use cuda.eclass as nvcc does not like --compiler-bindir set there for some reason
@@ -24,7 +24,7 @@ SRC_URI=""
 
 LICENSE="BSD-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE="+cuda +python"
 
 CDEPEND="
@@ -53,7 +53,7 @@ RDEPEND="
 	python? (
 		dev-python/pandas[${PYTHON_USEDEP}]
 		dev-python/numpy[${PYTHON_USEDEP}]
-		media-gfx/pydot[${PYTHON_USEDEP}]
+		>=media-gfx/pydot-1.2.2[${PYTHON_USEDEP}]
 		sci-libs/scikits_image[${PYTHON_USEDEP}]
 	)
 "
