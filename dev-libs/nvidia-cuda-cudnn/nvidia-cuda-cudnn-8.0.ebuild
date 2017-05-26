@@ -12,7 +12,7 @@ HOMEPAGE="https://developer.nvidia.com/cuDNN"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 RESTRICT="fetch"
-LICENSE="NVIDIA-cuDNN"
+LICENSE="cuDNN-EULA"
 
 S="${WORKDIR}/${PKG}"
 

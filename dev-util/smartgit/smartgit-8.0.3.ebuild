@@ -1,4 +1,4 @@
-# Copyright 2015-2016 Jan Chren (rindeal)
+# Copyright 2015-2017 Jan Chren (rindeal)
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -11,7 +11,7 @@ VENDOR="syntevo"
 
 DESCRIPTION="Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial"
 HOMEPAGE="https://www.${VENDOR}.com/${PN}"
-LICENSE="${PN}"
+LICENSE="smartgit free-noncomm MIT EPL-1.0 Apache-2.0 LGPL-2.1"
 
 # slot number is based on the upstream slotting mechanism which creates a new subdir
 # in `~/.smartgit` for each new major release. The subdir name corresponds with SLOT.

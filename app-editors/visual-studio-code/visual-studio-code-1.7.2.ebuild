@@ -14,7 +14,7 @@ SRC_URI="
 	"
 RESTRICT="mirror strip"
 
-LICENSE="Microsoft"
+LICENSE="Microsoft-visualstudio-EULA"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""

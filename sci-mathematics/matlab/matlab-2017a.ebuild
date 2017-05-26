@@ -1,6 +1,6 @@
+# Copyright 1999-2017 Gentoo Foundation
 # By eroen, 2014
 # Distributed under the terms of the ISC licence
-# $Header: $
 
 EAPI=5
 
@@ -12,7 +12,7 @@ DESCRIPTION="High-level language and interactive environment"
 HOMEPAGE="http://www.mathworks.com/products/matlab/"
 SRC_URI=""
 
-LICENSE="MATLAB"
+LICENSE="MATLAB-EULA"
 RESTRICT="bindist"
 SLOT=${MY_PV}
 KEYWORDS="-* ~amd64"
