@@ -9,6 +9,10 @@
 		<email>krlgrudzinski+gentoo@gmail.com</email>
 		<name>Karol Grudziński</name>
 	</maintainer>
+        <maintainer type="person">
+                <email>archenroot@gmail.com</email>
+                <name>Ladislav Jech</name>
+        </maintainer>
 	<use>
 		<flag name="pax_kernel">Triggers a paxmarking of the main skype binary</flag>
 	</use>
