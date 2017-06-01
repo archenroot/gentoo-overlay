@@ -16,7 +16,7 @@ EGIT_COMMIT="efe5376f3dec8fcc2bf3299a4ff4df6ad3591c88"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~x86-macos"
-IUSE=""
+IUSE="cuda opencl"
 RESTRICT="primaryuri"
 
 RDEPEND="
