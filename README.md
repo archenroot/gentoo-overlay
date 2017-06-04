@@ -1,5 +1,7 @@
 ArchenROOT Gentoo Overlay
 
+https://github.com/gentoo/travis-repo-checks
+
 This is experimental overlay and mostly focused on CUDA, OpenCL, BigData and high-performance Java and other packages.
 
 Lots of packages needs QA and metadata to be defined well, I firstly focus on get it working "somehow" :-)
