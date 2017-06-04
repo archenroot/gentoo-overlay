@@ -1,6 +1,6 @@
 ArchenROOT Gentoo Overlay
 
-https://github.com/gentoo/travis-repo-checks
+[![Build Status](https://travis-ci.org/archenroot/gentoo-overlay.svg?branch=master)](https://travis-ci.org/archenroot/gentoo-overlay)
 
 This is experimental overlay and mostly focused on CUDA, OpenCL, BigData and high-performance Java and other packages.
 
