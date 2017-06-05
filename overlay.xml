@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE repositories SYSTEM "repositories.dtd">
 <repositories xmlns="" version="1.0">
-  <repo quality="experimental" status="unofficial">
-    <name>archenroot</name>
-    <description lang="en">ArchenROOT Gentoo Overlay</description>
-    <homepage>https://github.com/archenroot/gentoo-overlay</homepage>
-    <owner type="person">
-      <email>archenroot@gmail.com</email>
-      <name>Ladislav Jech</name>
-    </owner>
-  <source type="git">https://github.com/archenroot/gentoo-overlay.git</source>
-</repo>
+	<repo quality="experimental" status="unofficial">
+		<name>archenroot</name>
+		<description lang="en">ArchenROOT Gentoo Overlay - GPU, Neural Networks and Big Data oriented overlay.</description>
+		<homepage>https://github.com/archenroot/gentoo-overlay</homepage>
+		<owner type="person">
+			<email>archenroot@gmail.com</email>
+			<name>Ladislav Jech</name>
+		</owner>
+		<source type="git">https://github.com/archenroot/gentoo-overlay.git</source>
+		<source type="git">git@github.com:archenroot/gentoo-overlay.git</source>
+		<feed>https://github.com/archenroot/gentoo-overlay/commits/master.atom</feed>
+	</repo>
 </repositories>
