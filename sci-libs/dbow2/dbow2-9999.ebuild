@@ -9,7 +9,7 @@ DESCRIPTION="Enhanced hierarchical bag-of-word library for C++"
 HOMEPAGE="https://github.com/dorian3d/DBoW2"
 EGIT_REPO_URI="https://github.com/dorian3d/DBoW2.git"
 
-LICENSE="DBoW2-EULA"
+LICENSE="Galvez-Lopez"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
