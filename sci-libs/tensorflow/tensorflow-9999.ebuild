@@ -20,19 +20,20 @@ IUSE="cuda opencl"
 RESTRICT="primaryuri"
 
 RDEPEND="
+	>=dev-python/numpy-1.11.2-r1
+	>=dev-python/six-1.10.0
+	>=dev-libs/nvidia-cuda-cudnn-8.0
+	>=dev-util/nvidia-cuda-toolkit-8.0.61
+	>=x11-drivers/nvidia-drivers-3.78.13
 "
 
 DEPEND="
 	>=dev-python/setuptools-34.3.3
 	>=dev-util/bazel-0.4.5[tools]
 	>=dev-python/pip-9.0.1-r1
-	>=dev-python/numpy-1.11.2-r1
 	>=dev-python/wheel-0.29.0
-	>=dev-python/six-1.10.0
 	>=dev-lang/swig-3.0.8
-	>=x11-drivers/nvidia-drivers-3.78.13
-	>=dev-util/nvidia-cuda-toolkit-8.0.61
-	>=dev-libs/nvidia-cuda-cudnn-8.0
+	${RDEPEND}
 "
 
 src_prepare() {

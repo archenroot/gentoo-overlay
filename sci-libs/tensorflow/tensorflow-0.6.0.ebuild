@@ -22,7 +22,7 @@ RDEPEND="
 "
 
 DEPEND="
-	>=sys-devel/bazel-0.1.1
+	>=dev-util/bazel-0.1.1
 	>=dev-python/wheel-0.26.0
 	>=dev-python/six-1.10.0
 	>=dev-lang/swig-3.0.8
