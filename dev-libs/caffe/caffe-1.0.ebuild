@@ -72,10 +72,27 @@ DISTRIBUTE_DIR := distribute
 USE_PKG_CONFIG := 1
 
 LIBRARY_NAME_SUFFIX := -nv
+	CXX ?= /usr/bin/g++ -std=c++98
+	GCCVERSION := $(shell $(CXX) -dumpversion | cut -f1,2 -d.)
+	# older versions of gcc are too dumb to build boost with -Wuninitalized
+	ifeq ($(shell echo | awk '{exit $(GCCVERSION) < 4.6;}'), 1)
+		WARNINGS += -Wno-uninitialized
+	endif
+	# boost::thread is reasonably called boost_thread (compare OS X)
+	# We will also explicitly add stdc++ to the link target.
+	LIBRARIES += boost_thread stdc++
+	VERSIONFLAGS += -Wl,-soname,$(DYNAMIC_VERSIONED_NAME_SHORT) -Wl,-rpath,$(ORIGIN)/../lib
 EOF
 
 	if use cuda; then
 		cat >> Makefile.config << EOF
+#CFLAGS="${CFLAGS}"
+#CXXFLAGS="${CXXFLAGS} -g -fno-delete-null-pointer-checks -std=gnu++98"
+#COMMON_FLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
+#CXXFLAGS += -g -fno-delete-null-pointer-checks -std=gnu++98 -pthread -fPIC $(COMMON_FLAGS) $(WARNINGS)
+#CXXFLAGS="${CXXFLAGS} -g -fno-delete-null-pointer-checks -std=gnu++98"
+#NVCCFLAGS += -ccbin=$(CXX) -Xcompiler -fPIC $(COMMON_FLAGS)
+
 CUDA_DIR := "${EPREFIX}/opt/cuda"
 
 CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \

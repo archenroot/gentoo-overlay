@@ -1,24 +1,36 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
-#EGIT_REPO_URI="git://github.com/BVLC/caffe.git"
-EGIT_REPO_URI="git://github.com/NVIDIA/caffe"
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python2_7 python3_4 )
 
-inherit toolchain-funcs multilib git-r3 python-single-r1
+SCM=""
+if [ "${PV#9999}" != "${PV}" ] ; then
+        SCM="git-r3"
+        EGIT_REPO_URI="https://github.com/BVLC/caffe.git"
+fi
+
+inherit ${SCM} cmake-utils python-single-r1
+
 # Can't use cuda.eclass as nvcc does not like --compiler-bindir set there for some reason
 
 DESCRIPTION="Deep learning framework by the BVLC"
 HOMEPAGE="http://caffe.berkeleyvision.org/"
-SRC_URI=""
+if [ "${PV#9999}" != "${PV}" ] ; then
+        SRC_URI=""
+        KEYWORDS=""
+else
+        SRC_URI="https://github.com/BVLC/caffe/archive/${PV}.tar.gz -> ${P}.tar.gz"
+		KEYWORDS="~amd64 ~arm"
+fi
+
 
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="cuda python"
+IUSE="+cuda leveldb lmdb opencv python"
 
 CDEPEND="
 	dev-libs/boost:=[python?]
@@ -53,94 +65,26 @@ RDEPEND="
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
+src_prepare() {
+	cmake-utils_src_prepare
+}
+
 src_configure() {
-	# Respect CFLAGS
-	sed -e '/COMMON_FLAGS/s/-O2//' -i Makefile
-
-	cat > Makefile.config << EOF
-BLAS := atlas
-BUILD_DIR := build
-DISTRIBUTE_DIR := distribute
-
-USE_PKG_CONFIG := 1
-
-LIBRARY_NAME_SUFFIX := -nv
-EOF
-
-	if use cuda; then
-		cat >> Makefile.config << EOF
-CUDA_DIR := "${EPREFIX}/opt/cuda"
-
-CUDA_ARCH := -gencode arch=compute_20,code=sm_20 \
-			 -gencode arch=compute_20,code=sm_21 \
-			 -gencode arch=compute_30,code=sm_30 \
-			 -gencode arch=compute_35,code=sm_35 \
-			 -gencode arch=compute_50,code=sm_50 \
-			 -gencode arch=compute_50,code=compute_50
-EOF
-
-		# This should be handled by Makefile itself, but somehow is broken
-		sed -e "/CUDA_LIB_DIR/s/lib/$(get_libdir)/" -i Makefile || die "sed failed"
-	else
-		echo "CPU_ONLY := 1" >> Makefile.config
-	fi
-
-	if use python; then
-		python_export PYTHON_INCLUDEDIR PYTHON_SITEDIR PYTHON_LIBPATH
-		cat >> Makefile.config << EOF
-PYTHON_INCLUDE := "${PYTHON_INCLUDEDIR}" "${PYTHON_SITEDIR}/numpy/core/include"
-PYTHON_LIB := "$(dirname ${PYTHON_LIBPATH})"
-WITH_PYTHON_LAYER := 1
-
-INCLUDE_DIRS += \$(PYTHON_INCLUDE)
-LIBRARY_DIRS += \$(PYTHON_LIB)
-EOF
-
-		local py_version=${EPYTHON#python}
-		sed -e "/PYTHON_LIBRARIES/s/python\s/python-${py_version} /g" \
-			-i Makefile || die "sed failed"
-	fi
-
-	sed -e '/blas/s/atlas//' \
-		-e '/^LINKFLAGS +=/ a\
-		LINKFLAGS += -L$(LIB_BUILD_DIR)
-		' \
-		-i Makefile || die "sed failed"
-
-	tc-export CC CXX
+	local mycmakeargs=(
+		-DCPU_ONLY=1
+		-DCPU_ONLY="$(usex !cuda)"
+		-DUSE_OPENCV="$(usex opencv)"
+		-DUSE_LEVELDB="$(usex leveldb)"
+		-DUSE_LMDB="$(usex lmdb)"
+		)
+	cmake-utils_src_configure
 }
 
 src_compile() {
-	emake
-
-	use python && emake pycaffe
-}
-
-src_test() {
-	emake runtest
-
-	use python && emake pytest
+	cmake-utils_src_compile
+	#use doc && cmake-utils_src_compile doc
 }
 
 src_install() {
-	emake distribute
-
-	for bin in distribute/bin/*; do
-		local name=$(basename ${bin})
-		newbin ${bin} ${name//.bin/}
-	done
-
-	insinto /usr
-	doins -r distribute/include/
-
-	dolib.a distribute/lib/libcaffe*.a*
-	dolib.so distribute/lib/libcaffe*.so*
-
-	if use python; then
-		rm distribute/python/caffe/_caffe.cpp || die "rm failed"
-		python_domodule distribute/python/caffe
-		for script in distribute/python/*.py; do
-			python_doscript ${script}
-		done
-	fi
+	cmake-utils_src_install
 }
