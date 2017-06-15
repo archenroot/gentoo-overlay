@@ -8,10 +8,10 @@ inherit toolchain-funcs cmake-utils python-r1 java-pkg-opt-2 java-ant-2
 
 DESCRIPTION="A collection of algorithms and sample code for various computer vision problems"
 HOMEPAGE="http://opencv.org"
+SRC_URI="https://github.com/archenroot/${PN}/archive/3.2.0.tar.gz -> ${P}.tar.gz
+	contrib? ( https://github.com/opencv/${PN}_contrib/archive/3.2.0.tar.gz -> opencv-3.2.0_contrib.tar.gz
+		contrib_xfeatures2d? ( http://dev.gentoo.org/~amynka/snap/vgg_boostdesc-3.2.0.tar.gz ) )"
 
-SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz
-	contrib? ( https://github.com/${PN}/${PN}_contrib/archive/${PV}.tar.gz -> ${P}_contrib.tar.gz
-		contrib_xfeatures2d? ( http://dev.gentoo.org/~amynka/snap/vgg_boostdesc-${PV}.tar.gz ) )"
 LICENSE="BSD"
 SLOT="0/3.2" # subslot = libopencv* soname version
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~amd64-linux"
@@ -95,7 +95,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-3.0.0-gles.patch"
 	"${FILESDIR}/${PN}-3.1.0-java-magic.patch"
 	"${FILESDIR}/${PN}-3.1.0-find-libraries-fix.patch"
-	"${FILESDIR}/${P}-vtk.patch"
+	"${FILESDIR}/opencv-3.2.0-vtk.patch"
+	"${FILESDIR}/opencv-3.2.0-gcc-6.0.patch"
 )
 
 pkg_pretend() {
@@ -196,9 +197,9 @@ src_configure() {
 		-DWITH_CUBLAS=$(usex cuda)
 		-DWITH_CUFFT=$(usex cuda)
 		-DWITH_NVCUVID=OFF
-		-DCUDA_GENERATION="Maxwell"
 #		-DWITH_NVCUVID=$(usex cuda)
 		-DCUDA_NPP_LIBRARY_ROOT_DIR=$(usex cuda "${EPREFIX}/opt/cuda" "")
+		-DCUDA_GENERATION="Maxwell"
 	# ===================================================
 	# OpenCV build components
 	# ===================================================
