@@ -29,8 +29,9 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-			#-DUSE_AVX_INSTRUCTIONS=1
-			#-DWITH_DLIB_ISO_CPP_ONLY_STR="$(usex cpponly)"
+		-DG2O_BUILD_APPS=ON
+		-DG2O_BUILD_EXAMPLES=ON
+		#-DWITH_DLIB_ISO_CPP_ONLY_STR="$(usex cpponly)"
 			#-DWITH_DLIB_NO_GUI_SUPPORT_STR="$(usex gui)"
 			#-DWITH_DLIB_ENABLE_STACK_TRACE_STR="$(usex trace)"
 			#-DWITH_DLIB_USE_BLAS_STR="$(usex blas)"
