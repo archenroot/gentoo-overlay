@@ -18,7 +18,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="static-libs"
 
-DEPEND="dev-libs/libemf2svg"
+DEPEND="media-libs/libemf2svg"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P}/"
