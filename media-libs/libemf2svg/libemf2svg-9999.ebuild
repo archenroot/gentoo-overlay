@@ -19,7 +19,7 @@ SLOT="0"
 IUSE="static-libs"
 
 DEPEND="dev-libs/libiconv
-	dev-libs/libpng"
+	media-libs/libpng"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P}/"
