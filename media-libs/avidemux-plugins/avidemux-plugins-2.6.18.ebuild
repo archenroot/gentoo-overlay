@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -51,7 +51,6 @@ DEPEND="
 		libsamplerate? ( media-libs/libsamplerate:0 )
 	)
 	lame? ( media-sound/lame:0 )
-	oss? ( virtual/os-headers:0 )
 	pulseaudio? ( media-sound/pulseaudio:0 )
 	truetype? ( media-libs/freetype:2 )
 	twolame? ( media-sound/twolame:0 )
@@ -66,7 +65,9 @@ DEPEND="
 	vpx? ( media-libs/libvpx:0 )
 	${PYTHON_DEPS}
 "
-RDEPEND="$DEPEND"
+DEPEND="$RDEPEND
+	oss? ( virtual/os-headers:0 )
+"
 
 S="${WORKDIR}/${MY_P}"
 
