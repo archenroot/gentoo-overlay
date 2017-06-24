@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -16,12 +16,12 @@ KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lang/perl
-	>=dev-perl/gtk2-perl-1.00
+	>=dev-perl/Gtk2-1.00
 	>=dev-perl/glib-perl-1.01
 	x11-libs/vte:0"
 
 DEPEND="${RDEPEND}
-	>=dev-perl/extutils-pkgconfig-1.03
+	>=dev-perl/ExtUtils-PkgConfig-1.03
 	>=dev-perl/ExtUtils-Depends-0.202
 	virtual/pkgconfig"
 
