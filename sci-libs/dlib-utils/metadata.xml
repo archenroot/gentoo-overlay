@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>archenroot@gmail.com</email>
+    <name>Ladislav Jech</name>
+  </maintainer>
+  <longdescription lang="en">
+  dlib is a C++ library for developing portable applications dealing with
+  networking, threads, graphical interfaces, data structures, linear
+  algebra, machine learning, XML and text parsing, numerical
+  optimization, Bayesian nets, and numerous other tasks.
+  </longdescription>
+  <use>
+    <flag name="asserts">TBC...</flag>
+    <flag name="avx">TBC...</flag>
+    <flag name="cpponly">TBC...</flag>
+    <flag name="cuda">TBC...</flag>
+    <flag name="mkl-fft">TBC...</flag>
+    <flag name="sqllite3">TBC...</flag>
+    <flag name="trace">TBC...</flag>
+  </use>
+  <upstream>
+    <remote-id type="sourceforge">dclib</remote-id>
+  </upstream>
+</pkgmetadata>
