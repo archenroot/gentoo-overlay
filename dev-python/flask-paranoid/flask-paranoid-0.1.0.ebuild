@@ -6,12 +6,12 @@ PYTHON_COMPAT=( python{2_7,3_4,3_5} pypy )
 
 inherit distutils-r1 versionator
 
-MY_PN="Flask-HTMLmin"
-MY_PV=$(get_version_component_range 1-2)
+MY_PN="Flask-Paranoid"
+MY_PV=$(get_version_component_range 1-3)
 MY_P="${MY_PN}-${MY_PV}"
 
-DESCRIPTION="i18n and l10n support for Flask based on Babel and pytz"
-HOMEPAGE="https://pythonhosted.org/Flask-Babel/"
+DESCRIPTION="Simple user session protection"
+HOMEPAGE="https://pythonhosted.org/Flask-Paranoid/"
 SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="BSD"

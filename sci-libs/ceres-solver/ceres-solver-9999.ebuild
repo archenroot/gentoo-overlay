@@ -96,7 +96,8 @@ src_configure() {
 
 src_install() {
 	cmake-multilib_src_install
-	dodoc README.md VERSION
+	dodoc README.md 
+	#VERSION
 
 	if use examples; then
 		insinto /usr/share/doc/${PF}
