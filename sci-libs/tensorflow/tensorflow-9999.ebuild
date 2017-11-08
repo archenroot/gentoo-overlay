@@ -11,7 +11,7 @@ DESCRIPTION="Library for Machine Intelligence"
 HOMEPAGE="https://www.tensorflow.org/"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/tensorflow/tensorflow"
-#EGIT_COMMIT="efe5376f3dec8fcc2bf3299a4ff4df6ad3591c88"
+EGIT_COMMIT="c9568f1ee51a265db4c5f017baf722b9ea5ecfbb"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -33,6 +33,10 @@ DEPEND="
 	>=dev-python/setuptools-34.3.3
 	>=dev-util/bazel-0.7.0[tools]
 	>=dev-java/oracle-jdk-bin-1.8.0.152-r1
+	>=dev-python/markdown-2.6.9
+	>=dev-python/werkzeug-0.12.2
+	>=dev-python/bleach-1.5.0
+	>=dev-libs/protobuf-3.4.0
 	>=dev-python/pip-9.0.1-r1
 	>=dev-python/wheel-0.29.0
 	>=dev-lang/swig-3.0.12
@@ -45,6 +49,9 @@ DEPEND="
 #}
 
 src_configure() {
+	local ALFA="$(find /tmp/empty* -type f -exec sh -c 'echo $(basename {})' \;)"
+
+	elog "!!!!!! CHECK ${ALFA}"
 	yes "" | ./configure
 
 	cat > CROSSTOOL << EOF
@@ -62,16 +69,18 @@ EOF
 }
 
 src_compile() {
+	addwrite /proc/self
+	# Added from bazel ebuild.. I am blind here as I don't understand deeply bazel itself :-)
+	addpredict /proc
 	elog "Compile Phase - Starting"
+
 	local JAVA_HOME_DECL="$(java-config --print oracle-jdk-bin-1.8 | grep JAVA_HOME)"
 	eval "export $JAVA_HOME_DECL"
 
 	# Add /proc/self to avoid a sandbox breakage
 	local -x SANDBOX_WRITE="${SANDBOX_WRITE}"
 	echo "SANDBOX_WRITE=$SANDBOX_WRITE"
-	addwrite /proc/self
-	# Added from bazel ebuild.. I am blind here as I don't understand deeply bazel itself :-)
-	addpredict /proc
+
 	elog "Compile Phase - SANDBOX_WRITE"
 
 	cat > bazelrc << EOF
@@ -91,7 +100,9 @@ src_install() {
 	elog "Install Phase - Starting"
 	bazel-bin/tensorflow/tools/pip_package/build_pip_package "$PWD/tensorflow_pkg"
 	elog "Install Phase - PIP package finished"
-	pip install --root "${ED}" "$PWD/tensorflow_pkg/*.whl"
+	local ALFA="$(find /tmp/empty* -type f -exec sh -c 'echo $(basename {})' \;)"
+	local TENSORFLOW_WHEEL_FILE="$(find $PWD/tensorflow_pkg/tensorflow* -type f -exec sh -c 'echo $(basename {})' \;)"
+	pip install --root "${ED}" "$PWD/tensorflow_pkg/$TENSORFLOW_WHEEL_FILE"
 	elog "Install Phase - PIP install finished"
 	rm -rf "${ED}"/usr/lib*/python*/site-packages/google/protobuf
 	elog "Install Phase - removal of some files"
