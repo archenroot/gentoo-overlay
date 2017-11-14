@@ -29,11 +29,12 @@ DEPEND="${COMMON_DEPEND}
 RDEPEND="${COMMON_DEPEND}"
 
 each_lua_configure() {
+	elog "============================"
 	elog "$(lua_get_pkgvar LUA_INCDIR)"
 
 	local mycmakeargs=(
 		-DLUADIR="$(lua_get_pkgvar INSTALL_LMOD)"
-		-DLIBDIR="$($(tc-getPKG_CONFIG) --variable INSTALL_LIB $(usex luajit 'luajit' 'lua'))"
+		-DLIBDIR="$(lua_get_pkgvar INSTALL_LIB)"
 		#-DLUA_BINDIR="$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		-DLUA_INCDIR="$(lua_get_pkgvar INSTALL_INC)"
 
@@ -50,8 +51,8 @@ src_compile() { :; }
 
 src_install() {
 	cmake-utils_src_install
-	mkdir -p "${D}"/usr/lib/lua/5.3 "${D}"/usr/share/lua/5.3/
-	mv "${D}"/usr/lib64/libpaths.so "${D}"/usr/lib/lua/5.3/
-	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.3/
+	mkdir -p "${D}"/usr/lib/lua/5.1 "${D}"/usr/share/lua/5.1/
+	mv "${D}"/usr/lib64/libpaths.so "${D}"/usr/lib/lua/5.1/
+	mv "${D}"/usr/lua/* "${D}"/usr/share/lua/5.1/
 	rm -rf "${D}"/usr/lua
 }
