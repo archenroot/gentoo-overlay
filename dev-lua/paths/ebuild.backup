@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit git-r3 cmake-utils toolchain-funcs
+inherit git-r3 cmake-utils toolchain-funcs lua
 
 DESCRIPTION="Paths manipulation library for Lua."
 HOMEPAGE="https://github.com/torch/paths"
