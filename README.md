@@ -1,14 +1,11 @@
-ArchenROOT Gentoo Overlay
+# ArchenROOT Gentoo Overlay
 
 [![Build Status](https://travis-ci.org/archenroot/gentoo-overlay.svg?branch=master)](https://travis-ci.org/archenroot/gentoo-overlay)
 
-This is experimental overlay and mostly focused on CUDA, OpenCL, BigData and high-performance Java and other packages.
+Experimental Gentoo overlay with primary focus on AI frameworks, GPU accelerated frameworks, BigData and high-performance Java.
+
+![image](https://github.com/archenroot/gentoo-overlay/images/Penguin-Update "Linux on Steroids")
 
 Lots of packages needs QA and metadata to be defined well, I firstly focus on get it working "somehow" :-)
 
-Please report any issues or enhancement which are well welcomed.
-
-In the moment I focus mostly on:
-- GPU development for relation and graph databases for new GAIA database GPU accelerated engine (there will be limited open-source edition available soon)
-- Neural Neworks for image/speech/behavior recognition
-- Anything cool
+Please report any issues, PRs are well welcomed.
