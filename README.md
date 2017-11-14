@@ -4,7 +4,7 @@
 
 Experimental Gentoo overlay with primary focus on AI frameworks, GPU accelerated frameworks, BigData and high-performance Java.
 
-![image](https://github.com/archenroot/gentoo-overlay/images/Penguin-Update "Linux on Steroids")
+![image](https://github.com/archenroot/gentoo-overlay/blob/master/images/Penguin-Update.jpg "Linux on Steroids")
 
 Lots of packages needs QA and metadata to be defined well, I firstly focus on get it working "somehow" :-)
 
