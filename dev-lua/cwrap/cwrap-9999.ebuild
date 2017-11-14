@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc luajit"
 
-COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
+COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.3:= )
 				luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 		virtual/pkgconfig"
