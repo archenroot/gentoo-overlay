@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=(python2_7 python3_5)
+PYTHON_COMPAT=( python{2_7,3_4,3_5} pypy )
 inherit distutils-r1
 
 DESCRIPTION="EasyDict allows to access dict values as attributes (works recursively)."
