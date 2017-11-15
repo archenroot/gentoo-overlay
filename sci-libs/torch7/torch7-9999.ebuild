@@ -17,16 +17,17 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+minimal cuda cudnn luajit opencl"
 
-COMMON_DEPEND="!luajit? ( >=dev-lang/lua-5.1:= )
+COMMON_DEPEND="
+	!luajit? ( >=dev-lang/lua-5.1:= )
 		luajit? ( dev-lang/luajit:2= )"
 DEPEND="${COMMON_DEPEND}
 	virtual/blas
 	virtual/lapack
-	dev-lua/luafilesystem
+	=dev-lua/luafilesystem-9999
 	dev-lua/penlight
 	dev-lua/lua-cjson
-	=dev-lua/torch-cwrap-9999
-	=dev-lua/torch-paths-9999
+	=dev-lua/cwrap-9999
+	=dev-lua/paths-9999
 	sys-devel/gcc[fortran]"
 RDEPEND="${DEPEND}
 	!minimal? (
@@ -52,6 +53,7 @@ RDEPEND="${DEPEND}
 REQUIRED_USE="cudnn? ( cuda )"
 
 src_configure() {
+	TORCH_LUA_VERSION=LUA53
 	local mycmakeargs=(
 		"-DLUADIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LMOD $(usex luajit 'luajit' 'lua'))"
 		"-DLIBDIR=$($(tc-getPKG_CONFIG) --variable INSTALL_LIB $(usex luajit 'luajit' 'lua'))"
@@ -61,6 +63,7 @@ src_configure() {
 		"-DSCRIPTS_DIR=$($(tc-getPKG_CONFIG) --variable INSTALL_BIN $(usex luajit 'luajit' 'lua'))"
 		"-DLUALIB=`equery files luajit |grep lib64/libluajit | grep .so | awk 'NR==0; END{print}'`"
 		"-DLUA=/usr/bin/luajit"
+		"-DWITH_LUA51=ON"
 	)
 
 	cmake-utils_src_configure
