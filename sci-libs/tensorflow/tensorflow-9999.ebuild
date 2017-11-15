@@ -30,7 +30,7 @@ RDEPEND="
 "
 
 DEPEND="
-	>=dev-python/setuptools-34.3.3
+	dev-python/setuptools
 	>=dev-util/bazel-0.7.0[tools]
 	>=dev-java/oracle-jdk-bin-1.8.0.152-r1
 	>=dev-python/markdown-2.6.9
