@@ -23,7 +23,7 @@ RDEPEND="
 	>=dev-python/numpy-1.11.2-r1
 	>=dev-python/six-1.10.0
 	cuda? (
-          >=dev-libs/nvidia-cuda-cudnn-8.0
+          >=dev-libs/nvidia-cuda-cudnn-7.0
 	  >=dev-util/nvidia-cuda-toolkit-8.0.61
           >=x11-drivers/nvidia-drivers-3.78.13
         )
@@ -40,6 +40,7 @@ DEPEND="
 	>=dev-python/pip-9.0.1-r1
 	>=dev-python/wheel-0.29.0
 	>=dev-lang/swig-3.0.12
+	>=dev-python/absl-py-0.1.4
 	${RDEPEND}
 "
 
@@ -52,6 +53,10 @@ src_configure() {
 	local ALFA="$(find /tmp/empty* -type f -exec sh -c 'echo $(basename {})' \;)"
 
 	elog "!!!!!! CHECK ${ALFA}"
+	export CUDNN_INSTALL_PATH="/usr/lib64"
+	export TF_NEED_CUDA="1"
+	export TF_CUDA_VERSION="9.0"
+	export TF_CUDNN_VERSION="7"
 	yes "" | ./configure
 
 	cat > CROSSTOOL << EOF
@@ -92,7 +97,7 @@ EOF
 	elog "Compile Phase - Bazel configured"
 	bazel build \
 	 --spawn_strategy=standalone --genrule_strategy=standalone \
-	 -c opt //tensorflow/tools/pip_package:build_pip_package
+	 --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
 	 elog "Compile Phase - Bazel build finished"
 }
 
