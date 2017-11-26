@@ -9,7 +9,7 @@ inherit qmake-utils multilib
 DESCRIPTION="Design, diagram, and deploy PostgreSQL databases"
 HOMEPAGE="http://www.pgmodeler.com.br/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV/_/-}.tar.gz"
-elog "${SRC_URI}"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
