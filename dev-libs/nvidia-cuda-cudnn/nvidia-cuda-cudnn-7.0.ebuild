@@ -1,9 +1,10 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Id$
 
 EAPI=5
 
-PKG="cudnn-8.0-linux-x64-v5.1"
+PKG="cudnn-8.0-linux-x64-v7"
 SRC_URI="${PKG}.tgz"
 
 DESCRIPTION="NVIDIA cuDNN GPU Accelerated Deep Learning"
@@ -12,11 +13,11 @@ HOMEPAGE="https://developer.nvidia.com/cuDNN"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 RESTRICT="fetch"
-LICENSE="cuDNN-EULA"
+LICENSE="NVIDIA-cuDNN"
 
 S="${WORKDIR}/${PKG}"
 
-DEPENDS=">=dev-util/nvidia-cuda-toolkit-8.0"
+DEPENDS=">=dev-util/nvidia-cuda-toolkit-7.0"
 
 pkg_nofetch() {
 	einfo "Please download"
@@ -30,6 +31,8 @@ src_unpack() {
 }
 
 src_install() {
+	cd "${S}"
+
 	pushd "lib64"
 
 	dolib.so libcudnn*.so*
