@@ -6,7 +6,5 @@ Experimental Gentoo overlay with primary focus on AI frameworks, GPU acceleratio
 
 ![image](https://github.com/archenroot/gentoo-overlay/blob/master/images/PenguinDrunk.png "Linux on Steroids")
 
-## List of packages (most important)
-
 
 Please report any issues, PRs are well welcomed.
