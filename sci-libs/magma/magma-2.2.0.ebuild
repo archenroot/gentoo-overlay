@@ -118,9 +118,12 @@ src_compile() {
 	emake shared
 	elog "======================  COMPILE PHASE ====================="
 	elog "lib/lib${PN}.so{,.2.2}"
-	mv "lib/lib${PN}.so{,.2.2}"
-	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so.2"
-	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so"
+  ls -la
+	pwd
+	mv "lib/lib${PN}.so" "lib/lib${PN}.so.2.2" || die
+
+	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so.2" || die
+	ln -sf "lib${PN}.so.2.2" "lib/lib${PN}.so" || die
 }
 
 src_test() {
