@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PKG="cudnn-8.0-linux-x64-v7"
+PKG="cudnn-9.0-linux-x64-v7"
 SRC_URI="${PKG}.tgz"
 
 DESCRIPTION="NVIDIA cuDNN GPU Accelerated Deep Learning"
@@ -17,7 +17,7 @@ LICENSE="NVIDIA-cuDNN"
 
 S="${WORKDIR}/${PKG}"
 
-DEPENDS=">=dev-util/nvidia-cuda-toolkit-7.0"
+DEPENDS=">=dev-util/nvidia-cuda-toolkit-9.0.176"
 
 pkg_nofetch() {
 	einfo "Please download"
