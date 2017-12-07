@@ -8,7 +8,6 @@ inherit eutils pax-utils
 DESCRIPTION="Multiplatform Visual Studio Code from Microsoft"
 HOMEPAGE="https://code.visualstudio.com"
 BASE_URI="https://vscode-update.azurewebsites.net/${PV}"
-#x86? ( ${BASE_URI}/linux-ia32/stable ->  ${P}-x86.tar.gz )
 SRC_URI="
 	amd64? ( ${BASE_URI}/linux-x64/stable -> ${P}-amd64.tar.gz )
 	"
@@ -32,12 +31,6 @@ RDEPEND="
 	>=net-print/cups-2.0.0
 	x11-libs/libnotify
 "
-
-# Not allowed in latest ?EAPI looks like
-# ARCH=$(uname -m)
-
-#[[ ${ARCH} == "x86_64" ]] && S="${WORKDIR}/VSCode-linux-x64"
-#[[ ${ARCH} != "x86_64" ]] && S="${WORKDIR}/VSCode-linux-ia32"
 
 S="${WORKDIR}/VSCode-linux-x64"
 
