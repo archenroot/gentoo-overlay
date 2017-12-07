@@ -8,15 +8,15 @@ inherit eutils pax-utils
 DESCRIPTION="Multiplatform Visual Studio Code from Microsoft"
 HOMEPAGE="https://code.visualstudio.com"
 BASE_URI="https://vscode-update.azurewebsites.net/${PV}"
+#x86? ( ${BASE_URI}/linux-ia32/stable ->  ${P}-x86.tar.gz )
 SRC_URI="
-	x86? ( ${BASE_URI}/linux-ia32/stable ->  ${P}-x86.tar.gz )
 	amd64? ( ${BASE_URI}/linux-x64/stable -> ${P}-amd64.tar.gz )
 	"
 RESTRICT="mirror strip"
 
 LICENSE="Microsoft-visualstudio-EULA"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
@@ -33,10 +33,13 @@ RDEPEND="
 	x11-libs/libnotify
 "
 
-ARCH=$(uname -m)
+# Not allowed in latest ?EAPI looks like
+# ARCH=$(uname -m)
 
-[[ ${ARCH} == "x86_64" ]] && S="${WORKDIR}/VSCode-linux-x64"
-[[ ${ARCH} != "x86_64" ]] && S="${WORKDIR}/VSCode-linux-ia32"
+#[[ ${ARCH} == "x86_64" ]] && S="${WORKDIR}/VSCode-linux-x64"
+#[[ ${ARCH} != "x86_64" ]] && S="${WORKDIR}/VSCode-linux-ia32"
+
+S="${WORKDIR}/VSCode-linux-x64"
 
 src_install(){
 	pax-mark m code
