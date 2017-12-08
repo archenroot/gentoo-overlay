@@ -16,16 +16,16 @@ EGIT_COMMIT="c9568f1ee51a265db4c5f017baf722b9ea5ecfbb"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~x86-macos"
-IUSE="-cuda -opencl"
+IUSE="cuda -opencl"
 RESTRICT="primaryuri"
 
 RDEPEND="
 	>=dev-python/numpy-1.11.2-r1
 	>=dev-python/six-1.10.0
 	cuda? (
-          >=dev-libs/nvidia-cuda-cudnn-7.0
-	  >=dev-util/nvidia-cuda-toolkit-8.0.61
-          >=x11-drivers/nvidia-drivers-3.78.13
+    >=dev-libs/nvidia-cuda-cudnn-7.0
+	  >=dev-util/nvidia-cuda-toolkit-9.0.176
+          >=x11-drivers/nvidia-drivers-387.34
         )
 "
 
