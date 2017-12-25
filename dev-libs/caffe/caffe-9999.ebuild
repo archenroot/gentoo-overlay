@@ -30,15 +30,17 @@ fi
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+cuda leveldb lmdb opencv python"
+IUSE="cuda leveldb lmdb opencv python"
 
 CDEPEND="
 	dev-libs/boost:=[python?]
 	media-libs/opencv:=
-	dev-libs/protobuf:=[python?]
+	python? (
+    dev-python/protobuf-python:=
+  )
 	dev-cpp/glog:=
 	dev-cpp/gflags:=
-	sci-libs/hdf5:=
+	sci-libs/atlas:=[lapack]
 	dev-libs/leveldb:=
 	app-arch/snappy:=
 	dev-db/lmdb:=
@@ -76,6 +78,7 @@ src_configure() {
 		-DUSE_OPENCV="$(usex opencv)"
 		-DUSE_LEVELDB="$(usex leveldb)"
 		-DUSE_LMDB="$(usex lmdb)"
+    -DHDF5_INCLUDE_DIR="/usr/include"
 		)
 	cmake-utils_src_configure
 }
