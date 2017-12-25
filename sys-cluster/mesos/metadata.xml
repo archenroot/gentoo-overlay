@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>archenroot@gmail.com</email>
+    <name>Ladislav Jech</name>
+  </maintainer>
+  <longdescription lang="en">
+    Apache Mesos is a cluster manager that provides efficient
+    resource isolation and sharing across distributed applications,
+    or frameworks. It can run Hadoop, Jenkins, Spark, Aurora, and
+    other frameworks on a dynamically shared pool of nodes.
+  </longdescription>
+  <!--<use>
+    <flag name="asserts">TBC...</flag>
+    <flag name="avx">TBC...</flag>
+    <flag name="cpponly">TBC...</flag>
+    <flag name="cuda">TBC...</flag>
+    <flag name="mkl-fft">TBC...</flag>
+    <flag name="sqllite3">TBC...</flag>
+    <flag name="trace">TBC...</flag>
+  </use> -->
+  <upstream>
+    <remote-id type="github">apache/mesos</remote-id>
+  </upstream>
+</pkgmetadata>
