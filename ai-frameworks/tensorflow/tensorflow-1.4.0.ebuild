@@ -1,8 +1,8 @@
 # Copyright 2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
-PYTHON_COMPAT=( python{2_7,3_4} pypy )
+EAPI=6
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} pypy )
 
 inherit eutils multiprocessing distutils-r1 git-r3
 
@@ -11,11 +11,11 @@ DESCRIPTION="Library for Machine Intelligence"
 HOMEPAGE="https://www.tensorflow.org/"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/tensorflow/tensorflow"
-EGIT_COMMIT="c9568f1ee51a265db4c5f017baf722b9ea5ecfbb"
+#EGIT_COMMIT="c9568f1ee51a265db4c5f017baf722b9ea5ecfbb"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~x86-macos"
+KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~amd64-linux ~x86-linux ~x86-macos"
 IUSE="amazon-s3 cuda gdr google-cloud hadoop malloc opencl verbs xla-jit"
 RESTRICT="primaryuri"
 
@@ -50,6 +50,7 @@ DEPEND="
 #}
 
 src_configure() {
+
 	export CUDNN_INSTALL_PATH="/usr/lib64"
 	export TF_NEED_CUDA="1"
 	export TF_CUDA_VERSION="9.0"
@@ -71,6 +72,7 @@ EOF
 }
 
 src_compile() {
+	elog "CUDNN_INSTALL_PATH=$CUDNN_INSTALL_PATH"
 	addwrite /proc/self
 	# Added from bazel ebuild.. I am blind here as I don't understand deeply bazel itself :-)
 	addpredict /proc
