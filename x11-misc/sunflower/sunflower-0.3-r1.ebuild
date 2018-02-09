@@ -8,6 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit eutils fdo-mime gnome2-utils python-r1
 
 MY_PN="Sunflower"
+MY_PR="61"
 DESCRIPTION="Small and highly customizable twin-panel file manager with plugin-support"
 HOMEPAGE="https://github.com/MeanEYE/Sunflower
 	http://sunflower-fm.org/"
@@ -26,7 +27,7 @@ RDEPEND="${DEPEND}
 	>=dev-python/notify-python-0.1[${PYTHON_USEDEP}]
 	gnome-base/librsvg:2"
 
-S=${WORKDIR}/${MY_PN}
+S=${WORKDIR}/${MY_PN}-${PV}-${MY_PR}
 
 src_prepare() {
 	find "${S}" -name "*.py[co]" -delete || die
@@ -47,6 +48,9 @@ src_install() {
 			AUTHORS CHANGES COPYING DEPENDS TODO __init__.py
 
 		# generate and install startup scripts
+		elog "s#@SITEDIR@#$(python_get_sitedir)/${PN}#"
+		elog ${FILESDIR}/${PN}
+		elog ${WORKDIR}/${PN}
 		sed \
 			-e "s#@SITEDIR@#$(python_get_sitedir)/${PN}#" \
 			"${FILESDIR}"/${PN} > "${WORKDIR}"/${PN} || die
