@@ -1,14 +1,13 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI="6"
 
 MY_PN="hbase"
 
 DESCRIPTION="HBase is the Hadoop database."
 HOMEPAGE="http://hadoop.apache.org/"
-SRC_URI="mirror://apache/${MY_PN}/${MY_PN}-${PV}/${MY_PN}-${PV}-bin.tar.gz"
-
+SRC_URI="https://www-us.apache.org/dist/${MY_PN}/${PV}/${MY_PN}-${PV}-bin.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"

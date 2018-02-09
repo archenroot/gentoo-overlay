@@ -7,7 +7,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 AUTOTOOLS_AUTORECONF=1
 inherit cmake-utils git-r3
 
-DESCRIPTION=""
+DESCRIPTION="FBLuaLib is a collection of Lua / Torch utilities developed at Facebook that we've found useful. Some of these utilities are useful without Torch."
 HOMEPAGE="https://github.com/facebook/fblualib"
 
 EGIT_REPO_URI="https://github.com/facebook/fblualib.git"

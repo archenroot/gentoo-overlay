@@ -7,7 +7,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 AUTOTOOLS_AUTORECONF=1
 inherit autotools-utils
 
-DESCRIPTION=""
+DESCRIPTION="Thrift is a serialization and RPC framework for service communication."
 HOMEPAGE="https://github.com/facebook/fbthrift"
 inherit git-r3
 EGIT_REPO_URI="https://github.com/facebook/fbthrift.git"

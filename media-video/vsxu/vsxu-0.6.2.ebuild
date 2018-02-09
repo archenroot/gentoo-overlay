@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v3 or later
 # Author: Jonas Jelten <jonas.jelten@gmail.com>
 
-EAPI=5
-inherit git-2 cmake-utils
+EAPI=6
+inherit git-r3 cmake-utils
 
 DESCRIPTION="A free to use program that lets you create and perform real-time audio visual presets."
 HOMEPAGE="http://www.vsxu.com/"

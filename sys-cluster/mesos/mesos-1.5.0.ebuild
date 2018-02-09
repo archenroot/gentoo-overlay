@@ -9,15 +9,18 @@ MY_P="mesos"
 MY_PN=${MY_P}-${PV}
 DESCRIPTION="A cluster manager that provides efficient resource isolation and sharing across distributed applications"
 HOMEPAGE="http://mesos.apache.org/"
-#SRC_URI="http://archive.apache.org/dist/${PN}/${PV}/${P}.tar.gz"
-SRC_URI="mirror://apache/${MY_P}/${MY_PN}/${MY_PN}.tar.gz"
+SRC_URI="http://archive.apache.org/dist/${PN}/${PV}/${P}.tar.gz"
+#SRC_URI="mirror://apache/${MY_P}/${MY_PN}/${MY_PN}.tar.gz"
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="network-isolator perftools install-module-dependencies"
 SLOT="0"
 
+# dev-libs/libnl-3.2.28 lot of changes occured from 1.2 and previous versions
+# whole ebuild need review.
 RDEPEND=">=dev-libs/apr-1.5.2
 	>=net-misc/curl-7.43.0
+	>=dev-libs/libnl-3.2.28
 	network-isolator? ( dev-libs/libnl )
 	dev-libs/cyrus-sasl
 	>=dev-vcs/subversion-1.9.4"
@@ -27,8 +30,8 @@ S=${WORKDIR}/${MY_PN}
 
 src_prepare() {
 	echo `pwd`
-	epatch "${FILESDIR}/mesos-stout-cloexec.patch"
-	epatch "${FILESDIR}/mesos-linux-ns-nosetns.patch"
+	#epatch "${FILESDIR}/mesos-stout-cloexec.patch"
+	#epatch "${FILESDIR}/mesos-linux-ns-nosetns.patch"
 	eautoreconf
 }
 

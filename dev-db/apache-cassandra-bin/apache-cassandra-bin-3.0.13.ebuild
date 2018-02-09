@@ -6,8 +6,7 @@ inherit user
 
 MY_PN="cassandra"
 
-DESCRIPTION="The Apache Cassandra database is the right choice when you need
-scalability and high availability without compromising performance."
+DESCRIPTION="Distributed database for scalability and high availability without compromising performance."
 HOMEPAGE="http://cassandra.apache.org/"
 SRC_URI="mirror://apache/${MY_PN}/${PV}/apache-${MY_PN}-${PV}-bin.tar.gz"
 LICENSE="Apache-2.0"

@@ -1,12 +1,12 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 inherit user
 
 MY_PN="solr"
-DESCRIPTION="Popular, blazing fast open source enterprise search platform from the Apache Lucene project"
+DESCRIPTION="Fast search platform based on the Apache Lucene project."
 HOMEPAGE="http://lucene.apache.org/solr/"
 SRC_URI="http://www.apache.org/dist/lucene/${MY_PN}/${PV}/${MY_PN}-${PV}.tgz"
 

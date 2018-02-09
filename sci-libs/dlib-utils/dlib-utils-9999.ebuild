@@ -5,10 +5,11 @@ EAPI=6
 
 inherit cmake-utils eutils git-r3 toolchain-funcs
 
-DESCRIPTION=""
-HOMEPAGE=""
-EGIT_REPO_URI="https://github.com/archenroot/DLib-1.git"
+DESCRIPTION="DLib is a collection of C++ classes to solve common task."
+HOMEPAGE="https://github.com/dorian3d/DLib"
 # Original repository is not compatible with OpenCV 3* https://github.com/dorian3d/DLib.git"
+EGIT_REPO_URI="https://github.com/archenroot/DLib-1.git"
+
 
 LICENSE=""
 SLOT="0"
@@ -23,8 +24,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local mycmakeargs=(
-		)
+	local mycmakeargs=()
 	cmake-utils_src_configure
 }
 

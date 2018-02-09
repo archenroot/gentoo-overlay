@@ -13,7 +13,7 @@ EGIT_REPO_COMMIT="3e957ba6a10884496583ff5c351622049fbd65a0"
 LICENSE="UNKNOWN"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="-caffe -cuda -cudnn"
+IUSE="caffe cuda cudnn"
 
 RDEPEND=""
 
@@ -21,8 +21,6 @@ DEPEND="${RDEPEND}
   "
 S=${S}
 src_prepare() {
-
-
 	cmake-utils_src_prepare
 }
 
