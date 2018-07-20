@@ -1,0 +1,13 @@
+<pkgmetadata>
+  <maintainer type="person">
+  <email>samuelbernardo.mail@gmail.com</email>
+  <name>Samuel Bernardo</name>
+  <description>Personal repository</description>
+</maintainer>
+<longdescription lang="en">
+Excel at enterprise, mobile and web development with Java, Scala and Groovy, with all the latest modern technologies and frameworks available out of the box.
+</longdescription>
+<use>
+  <flag name="custom-jdk">Install and use IntelliJ's custom JRE.</flag>
+</use>
+</pkgmetadata>
