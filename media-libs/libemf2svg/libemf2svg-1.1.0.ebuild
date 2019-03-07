@@ -11,7 +11,7 @@ DESCRIPTION="Microsoft (MS) EMF to SVG conversion library"
 HOMEPAGE="https://github.com/kakwa/libemf2svg"
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/kakwa/libemf2svg.git"
-	#EGIT_REPO_COMMIT="8df7059bc1e63e1960415ce790a18a5492114287"
+	EGIT_REPO_COMMIT="6aabe8983af2db4a7697a9d3a739819109306979"
 
 KEYWORDS="~amd64"
 LICENSE="Apache-2.0"
