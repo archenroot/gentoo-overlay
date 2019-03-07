@@ -21,7 +21,7 @@ PN_SLOTTED="${PN}${SLOT}"
 # 	https://www.syntevo.com/static/smart/download/smartgit/smartgit-linux-8_0_1.tar.gz
 # 	https://www.syntevo.com/static/smart/download/smartgithg/archive/smartgit-linux-7_1_4.tar.gz
 SRC_URI="https://www.${VENDOR}.com/static/smart/download/${PN}/${PN}-linux-${PV//./_}.tar.gz"
-SRC_URI="https://www.syntevo.com/downloads/smartgit/smartgit-linux-18_1_5.tar.gz"
+SRC_URI="https://www.syntevo.com/downloads/smartgit/smartgit-linux-18_2_5.tar.gz"
 KEYWORDS="~amd64"
 
 RDEPEND="
