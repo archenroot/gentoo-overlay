@@ -1,0 +1,14 @@
+#!/bin/sh
+
+for J in oracle-{jre,jdk}-bin-1.{8,7,6}
+do
+ if java-config --select-vm="$J" -o 2>/dev/null
+ then
+   export PATH="`java-config --select-vm="$J" -o`/bin:$PATH"
+   break
+ fi
+
+done
+
+exec /opt/keystore-explorer/kse.sh "$@"
+
