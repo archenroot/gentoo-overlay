@@ -1,0 +1,43 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+DAEMON=${SVCNAME/hadoop-}
+PIDDIR=/var/run/pids
+[ -d ${PIDDIR} ] || mkdir -m=777 ${PIDDIR}
+
+depend() {
+	 use dns net ssh
+}
+
+init_env_vars() {
+	if [ "${DAEMON}" == "namenode" ] || [ "${DAEMON}" == "secondarynamenode" ] || [ "${DAEMON}" == "datanode" ]; then
+	   DN_USER="hdfs"
+	   DN_CMD="hadoop-daemon.sh"
+	   PID_FILE="hadoop-hdfs-${DAEMON}.pid"
+	elif [ "${DAEMON}" == "resourcemanager" ] || [ "${DAEMON}" == "nodemanager" ] ; then
+	   DN_USER="yarn"
+	   DN_CMD="yarn-daemon.sh"
+	   PID_FILE="yarn-yarn-${DAEMON}.pid"
+	else
+	   DN_USER="mapred"
+	   DN_CMD="mr-jobhistory-daemon.sh"
+	   PID_FILE="mapred-mapred-historyserver.pid"
+	fi
+}
+
+start() {
+	ebegin "Starting Apache Hadoop ${DAEMON} "
+	init_env_vars
+	start-stop-daemon --start --quiet --pidfile ${PIDDIR}/${PID_FILE}  \
+		-u ${DN_USER} -x /opt/hadoop/sbin/${DN_CMD} -- --config /etc/hadoop start ${DAEMON}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Apache Hadoop ${DAEMON}"
+	init_env_vars
+	start-stop-daemon --stop --quiet --pidfile ${PIDDIR}/${PID_FILE}
+	eend $?
+}
