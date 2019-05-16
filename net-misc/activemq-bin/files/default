@@ -1,4 +1,0 @@
-#ACTIVEMQ_OPTS="$ACTIVEMQ_OPTS -Dorg.apache.activemq.audit=true"
-#ACTIVEMQ_QUEUEMANAGERURL="--amqurl tcp://localhost:61616"
-#ACTIVEMQ_OPTS_MEMORY="-Xms1G -Xmx1G
-#ACTIVEMQ_PIDFILE="/var/run/activemq.pid"
