@@ -10,4 +10,12 @@
     detect human body, hand, and facial keypoints (in total 130 keypoints)
     on single images.
   </longdescription>
+  <upstream>
+    <remote-id type="github">CMU-Perceptual-Computing-Lab/openpose</remote-id>
+  </upstream>
+  <use>
+    <flag name="caffe">Build Caffe as part of OpenPose.</flag>
+    <flag name="cuda">Building with CUDA.</flag>
+    <flag name="cudnn">Build OpenPose with cuDNN library support.</flag>
+  </use>
 </pkgmetadata>
