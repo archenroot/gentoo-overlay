@@ -10,7 +10,8 @@ HOMEPAGE="https://github.com/CMU-Perceptual-Computing-Lab/openpose"
 EGIT_REPO_URI="https://github.com/CMU-Perceptual-Computing-Lab/openpose.git"
 EGIT_REPO_COMMIT="3e957ba6a10884496583ff5c351622049fbd65a0"
 
-LICENSE="BSD-2 CMU-openpose"
+LICENSE="CMU-openpose
+	caffe? ( BSD-2 )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="caffe cuda cudnn"
