@@ -1,17 +1,16 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
-inherit eutils versionator
+EAPI="7"
+inherit eutils
 
 SLOT="0"
-PV_STRING="$(get_version_component_range 4-6)"
-MY_PV="$(get_version_component_range 1-3)"
+PV_STRING="$(ver_cut 4-6)"
+MY_PV="$(ver_cut 1-3)"
 MY_PN="idea"
 
 # distinguish settings for official stable releases and EAP-version releases
-if [[ "$(get_version_component_range 7)x" = "prex" ]]
+if [[ "$(ver_cut 7)x" = "prex" ]]
 then
 	# upstream EAP
 	KEYWORDS=""
@@ -44,25 +43,27 @@ QA_PREBUILT="opt/${PN}-${MY_PV}/*"
 
 src_prepare() {
 	if ! use amd64; then
-		rm -r plugins/tfsIntegration/lib/native/linux/x86_64 || die
+		rm -vrf "${S}/lib/pty4j-native/linux/x86_64" || die
 	fi
 	if ! use arm; then
-		rm bin/fsnotifier-arm || die
-		rm -r plugins/tfsIntegration/lib/native/linux/arm || die
+		rm -vrf "${S}/lib/pty4j-native/linux/arm" || die
 	fi
 	if ! use ppc; then
-		rm -r plugins/tfsIntegration/lib/native/linux/ppc || die
+		rm -vrf "${S}/lib/pty4j-native/linux/ppc" || die
 	fi
 	if ! use x86; then
-		rm -r plugins/tfsIntegration/lib/native/linux/x86 || die
+		rm -vrf "${S}/lib/pty4j-native/linux/x86" || die
 	fi
 	if ! use custom-jdk; then
 		if [[ -d jre ]]; then
 			rm -r jre || die
 		fi
 	fi
-	rm -r plugins/tfsIntegration/lib/native/solaris || die
-	rm -r plugins/tfsIntegration/lib/native/hpux || die
+	rm -vrf "${S}/lib/pty4j-native/linux/ppc64le" || die
+	rm -vrf "${S}/lib/pty4j-native/linux/solaris" || die
+	rm -vrf "${S}/lib/pty4j-native/linux/hpux" || die
+
+	default
 }
 
 src_install() {
