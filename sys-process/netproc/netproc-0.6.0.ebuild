@@ -7,9 +7,10 @@ inherit git-r3
 
 DESCRIPTION="tool to monitor network traffic based on processes"
 HOMEPAGE="https://github.com/berghetti/netproc"
-EGIT_REPO_URI="https://github.com/archenroot/netproc.git"
-EGIT_COMMIT="1bc1292bea2d51c029c7b352b1149482d74aca71"
-EGIT_BRANCH="master"
+EGIT_REPO_URI="https://github.com/berghetti/netproc.git"
+#EGIT_COMMIT="1bc1292bea2d51c029c7b352b1149482d74aca71"
+EGIT_COMMIT="93013f16dee69c95651242dad6e949a5a375d358"
+EGIT_BRANCH="dev"
  
 LICENSE="GPL-2"
 SLOT="0"
