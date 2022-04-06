@@ -1,0 +1,12 @@
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>alesharik4@gmail.com</email>
+		<name>Aleksey Arsenev</name>
+	</maintainer>
+	<use>
+		<flag name="gentoo-vm">Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config)</flag>
+		<flag name="native-image">Provide javaws command through symlink to icedtea-web</flag>
+	</use>
+</pkgmetadata>
+
